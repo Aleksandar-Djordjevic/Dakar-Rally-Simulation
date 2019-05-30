@@ -5,7 +5,7 @@ namespace DakarRallySimulation
 {
     public interface IAmVehicle
     {
-        event EventHandler<string> FinishedRally;
+        event EventHandler FinishedRally;
         string Id { get; }
 
         void StartRally(Rally rally);

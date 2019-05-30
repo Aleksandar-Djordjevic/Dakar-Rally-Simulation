@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace DakarRallySimulation
         public readonly List<IAmVehicle> Vehicles = new List<IAmVehicle>();
 
         private RallyState _state;
-        private HashSet<string> _vehiclesStillInRally;
+        private HashSet<string> _vehiclesStillInRally = new HashSet<string>();
 
         public Rally(int year, int distance)
         {
@@ -37,11 +38,11 @@ namespace DakarRallySimulation
             return _state.Start();
         }
 
-        private void VehicleFinishedRally(object sender, string vehicleId)
+        private void WhenVehicleFinishesRally(object vehicle, EventArgs e)
         {
-            _state.VehicleFinishedRally(vehicleId);
+            _state.VehicleFinishedRally(((IAmVehicle)vehicle).Id);
         }
-
+        
         private abstract class RallyState
         {
             protected readonly Rally Rally;
@@ -68,23 +69,30 @@ namespace DakarRallySimulation
                     return OperationResult<Rally, string>.Failed("Vehicle already added to the rally.");
 
                 Rally.Vehicles.Add(vehicle);
+                Rally._vehiclesStillInRally.Add(vehicle.Id);
+                vehicle.FinishedRally += Rally.WhenVehicleFinishesRally;
+
                 return OperationResult<Rally, string>.Done(Rally);
             }
 
             public override OperationResult<Rally, string> RemoveVehicle(string vehicleId)
             {
-                if (Rally.Vehicles.RemoveAll(vehicle => vehicle.Id == vehicleId) > 0)
-                    return OperationResult<Rally, string>.Done(Rally);
-                else
+                var vehicle = Rally.Vehicles.Find(v => v.Id == vehicleId);
+
+                if (vehicle == null)
                     return OperationResult<Rally, string>.Failed("Vehicle does not exist.");
+
+                Rally.Vehicles.Remove(vehicle);
+                Rally._vehiclesStillInRally.Remove(vehicle.Id);
+                vehicle.FinishedRally -= Rally.WhenVehicleFinishesRally;
+
+                return OperationResult<Rally, string>.Done(Rally);
             }
 
             public override OperationResult<Rally, string> Start()
             {
                 if (Rally.Vehicles.Any())
                 {
-                    Rally._vehiclesStillInRally = new HashSet<string>(Rally.Vehicles.Select(vehicle => vehicle.Id));
-                    Rally.Vehicles.ForEach(vehicle => vehicle.FinishedRally += Rally.VehicleFinishedRally);
                     Rally._state = new RallyRunning(Rally);
                     Rally.Vehicles.ForEach(vehicle => vehicle.StartRally(Rally));
                 }

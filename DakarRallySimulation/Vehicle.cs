@@ -6,7 +6,7 @@ namespace DakarRallySimulation
 {
     public class Vehicle : IAmVehicle
     {
-        public event EventHandler<string> FinishedRally; 
+        public event EventHandler FinishedRally; 
 
         public string Id { get; }
         public string TeamName { get; }
@@ -92,7 +92,7 @@ namespace DakarRallySimulation
                 }
             }
 
-            OnVehicleFinishedRally(Id);
+            OnVehicleFinishedRally();
         }
 
         private async Task Repair()
@@ -102,9 +102,9 @@ namespace DakarRallySimulation
             State = VehicleState.Running;
         }
 
-        protected virtual void OnVehicleFinishedRally(string e)
+        protected virtual void OnVehicleFinishedRally()
         {
-            FinishedRally?.Invoke(this, e);
+            FinishedRally?.Invoke(this, EventArgs.Empty);
         }
     }
 
