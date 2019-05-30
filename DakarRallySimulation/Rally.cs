@@ -7,14 +7,17 @@ namespace DakarRallySimulation
 {
     public class Rally
     {
-        public readonly int Distance;
-        private readonly int _year;
+        public int Year { get; }
+        public int Distance { get; }
+        public bool IsFinished { get; private set; }
         public readonly List<Vehicle> Vehicles = new List<Vehicle>();
+
         private RallyState _state;
+        private int _numberOfVehiclesStillInRally = 0;
 
         public Rally(int year, int distance)
         {
-            _year = year;
+            Year = year;
             Distance = distance;
             _state = new RallyPending(this);
         }
@@ -34,9 +37,14 @@ namespace DakarRallySimulation
             return _state.Start();
         }
 
+        private void VehicleFinishedRally(object sender, string e)
+        {
+            _state.VehicleFinishedRally();
+        }
+
         private abstract class RallyState
         {
-            protected Rally Rally;
+            protected readonly Rally Rally;
 
             public RallyState(Rally rally)
             {
@@ -46,6 +54,8 @@ namespace DakarRallySimulation
             public abstract OperationResult<Rally, string> AddVehicle(Vehicle vehicle);
             public abstract OperationResult<Rally, string> RemoveVehicle(string vehicleId);
             public abstract OperationResult<Rally, string> Start();
+
+            public abstract void VehicleFinishedRally();
         }
 
         private class RallyPending : RallyState
@@ -71,10 +81,23 @@ namespace DakarRallySimulation
 
             public override OperationResult<Rally, string> Start()
             {
-                Rally._state = new RallyRunning(Rally);
-                Task.WhenAll(Rally.Vehicles.Select(vehicle => vehicle.StartRally(Rally)).ToArray());
-                Rally._state = new RallyFinished(Rally);
+                if (Rally.Vehicles.Any())
+                {
+                    Rally._numberOfVehiclesStillInRally = Rally.Vehicles.Count;
+                    Rally.Vehicles.ForEach(vehicle => vehicle.VehicleFinishedRally += Rally.VehicleFinishedRally);
+                    Rally._state = new RallyRunning(Rally);
+                    Rally.Vehicles.ForEach(vehicle => vehicle.StartRally(Rally));
+                }
+                else
+                {
+                    Rally._state = new RallyFinished(Rally);
+                }
                 return OperationResult<Rally, string>.Done(Rally);
+            }
+
+            public override void VehicleFinishedRally()
+            {
+                // log error
             }
         }
 
@@ -96,11 +119,22 @@ namespace DakarRallySimulation
             {
                 return OperationResult<Rally, string>.Failed("Rally is already started.");
             }
+
+            public override void VehicleFinishedRally()
+            {
+                if (--Rally._numberOfVehiclesStillInRally == 0)
+                {
+                    Rally._state = new RallyFinished(Rally);
+                }
+            }
         }
 
         private class RallyFinished : RallyState
         {
-            public RallyFinished(Rally rally) : base (rally) { }
+            public RallyFinished(Rally rally) : base(rally)
+            {
+                rally.IsFinished = true;
+            }
 
             public override OperationResult<Rally, string> AddVehicle(Vehicle vehicle)
             {
@@ -115,6 +149,11 @@ namespace DakarRallySimulation
             public override OperationResult<Rally, string> Start()
             {
                 return OperationResult<Rally, string>.Failed("Rally is already started.");
+            }
+
+            public override void VehicleFinishedRally()
+            {
+                // log error
             }
         }
     }

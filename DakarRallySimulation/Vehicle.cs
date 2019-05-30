@@ -6,10 +6,12 @@ namespace DakarRallySimulation
 {
     public class Vehicle
     {
-        public string Id { get; private set; }
-        public string TeamName { get; private set; }
-        public string Model { get; private set; }
-        public DateTime ManufacturingDate { get; private set; }
+        public event EventHandler<string> VehicleFinishedRally; 
+
+        public string Id { get; }
+        public string TeamName { get; }
+        public string Model { get; }
+        public DateTime ManufacturingDate { get; }
 
         private readonly List<Malfunction> _malfunctionHistory = new List<Malfunction>();
 
@@ -17,9 +19,11 @@ namespace DakarRallySimulation
         private readonly TimeSpan _repairmentDuration;
         private readonly IProvideHealtStatus _healtStatusProvider;
         private readonly int _simulationResolutionTimeInSeconds;
-        private decimal _distance;
-        private VehicleState _state;
         private DateTime? _finishTime;
+
+        public decimal Distance { get; private set; }
+
+        public VehicleState State { get; private set; }
 
         public Vehicle(string id, string teamName, string model, DateTime manufacturingDate, int maxSpeed,
             TimeSpan repairmentDuration, int simulationResolutionTimeInSeconds, IProvideHealtStatus healtStatusProvider)
@@ -32,13 +36,13 @@ namespace DakarRallySimulation
             _repairmentDuration = repairmentDuration;
             _simulationResolutionTimeInSeconds = simulationResolutionTimeInSeconds;
             _healtStatusProvider = healtStatusProvider;
-            _distance = 0;
-            _state = VehicleState.WaitingStart;
+            Distance = 0;
+            State = VehicleState.WaitingStart;
         }
 
         public Task StartRally(Rally rally)
         {
-            if (_state != VehicleState.WaitingStart)
+            if (State != VehicleState.WaitingStart)
             {
                 throw new InvalidOperationException("Vehicle has already started rally.");
             }
@@ -50,8 +54,8 @@ namespace DakarRallySimulation
         {
             return new VehicleStatistics
             {
-                Status = _state,
-                DistanceFromStart = _distance,
+                Status = State,
+                DistanceFromStart = Distance,
                 Malfunctions = _malfunctionHistory,
                 FinishTime = _finishTime
             };
@@ -59,15 +63,15 @@ namespace DakarRallySimulation
 
         private async Task GoGo(Rally rally)
         {
-            _state = VehicleState.Running;
+            State = VehicleState.Running;
 
-            while (_state != VehicleState.Broken)
+            while (State != VehicleState.Broken)
             {
                 await Task.Delay(TimeSpan.FromSeconds(_simulationResolutionTimeInSeconds));
-                _distance += (decimal)(_maxSpeed * _simulationResolutionTimeInSeconds) / 3600;
-                if (_distance >= rally.Distance)
+                Distance += (decimal)(_maxSpeed * _simulationResolutionTimeInSeconds) / 3600;
+                if (Distance >= rally.Distance)
                 {
-                    _state = VehicleState.Finished;
+                    State = VehicleState.Finished;
                     _finishTime = DateTime.UtcNow;
                     break;
                 }
@@ -76,7 +80,7 @@ namespace DakarRallySimulation
                 {
                     case HealtStatus.HeavyMalfunction:
                         _malfunctionHistory.Add(Malfunction.CreateHeavy());
-                        _state = VehicleState.Broken;
+                        State = VehicleState.Broken;
                         break;
                     case HealtStatus.LightMalfunction:
                         _malfunctionHistory.Add(Malfunction.CreateLight());
@@ -87,13 +91,20 @@ namespace DakarRallySimulation
                         break;
                 }
             }
+
+            OnVehicleFinishedRally(Id);
         }
 
         private async Task Repair()
         {
-            _state = VehicleState.Repairing;
+            State = VehicleState.Repairing;
             await Task.Delay(_repairmentDuration);
-            _state = VehicleState.Running;
+            State = VehicleState.Running;
+        }
+
+        protected virtual void OnVehicleFinishedRally(string e)
+        {
+            VehicleFinishedRally?.Invoke(this, e);
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DakarRallySimulation;
 using Xunit;
 
@@ -74,15 +75,15 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public void Finish()
+        public async Task Finish()
         {
             var rally = new Rally(2019, 2);
             var vehicle = AVehicleBuilder.BuildProperlyWorkingVehicle();
             rally.AddVehicle(vehicle);
 
-            var operationResult = rally.Start();
-
-            Assert.True(operationResult.IsSuccess);
+            rally.Start();
+            await Task.Delay(TimeSpan.FromSeconds(60));
+            Assert.True(rally.IsFinished);
         }
 
         private VehicleBuilder AVehicleBuilder => new VehicleBuilder();
