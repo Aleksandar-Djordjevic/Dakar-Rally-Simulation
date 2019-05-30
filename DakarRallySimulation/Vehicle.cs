@@ -6,7 +6,7 @@ namespace DakarRallySimulation
 {
     public class Vehicle : IAmVehicle
     {
-        public event EventHandler<string> VehicleFinishedRally; 
+        public event EventHandler<string> FinishedRally; 
 
         public string Id { get; }
         public string TeamName { get; }
@@ -104,7 +104,7 @@ namespace DakarRallySimulation
 
         protected virtual void OnVehicleFinishedRally(string e)
         {
-            VehicleFinishedRally?.Invoke(this, e);
+            FinishedRally?.Invoke(this, e);
         }
     }
 

@@ -102,7 +102,7 @@ namespace DakarRallySimulationTests
 
         private abstract class VehicleStub : IAmVehicle
         {
-            public event EventHandler<string> VehicleFinishedRally;
+            public event EventHandler<string> FinishedRally;
             public string Id { get; }
 
             public VehicleStub(string id)
@@ -114,7 +114,7 @@ namespace DakarRallySimulationTests
 
             protected void FinishRally()
             {
-                VehicleFinishedRally?.Invoke(this, Id);
+                FinishedRally?.Invoke(this, Id);
             }
         }
 
