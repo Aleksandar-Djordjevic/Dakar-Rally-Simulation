@@ -75,17 +75,64 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public async Task Finish()
+        public void FinishWhenAllVehiclesFinish()
         {
             var rally = new Rally(2019, 2);
-            var vehicle = AVehicleBuilder.BuildProperlyWorkingVehicle();
+            var vehicle = new VehicleThatImmediatelyFinishes("Id1");
             rally.AddVehicle(vehicle);
 
             rally.Start();
-            await Task.Delay(TimeSpan.FromSeconds(60));
+            
             Assert.True(rally.IsFinished);
         }
 
+        [Fact]
+        public void NotFinishWhenSomeVehicleNeverFinishes()
+        {
+            var rally = new Rally(2019, 2);
+            rally.AddVehicle(new VehicleThatImmediatelyFinishes("Id1"));
+            rally.AddVehicle(new VehicleThatNeverFinishes("Id2"));
+
+            rally.Start();
+
+            Assert.False(rally.IsFinished);
+        }
+
         private VehicleBuilder AVehicleBuilder => new VehicleBuilder();
+
+        private abstract class VehicleStub : IAmVehicle
+        {
+            public event EventHandler<string> VehicleFinishedRally;
+            public string Id { get; }
+
+            public VehicleStub(string id)
+            {
+                Id = id;
+            }
+
+            public abstract void StartRally(Rally rally);
+
+            protected void FinishRally()
+            {
+                VehicleFinishedRally?.Invoke(this, Id);
+            }
+        }
+
+        private class VehicleThatImmediatelyFinishes : VehicleStub
+        {
+            public VehicleThatImmediatelyFinishes(string id) : base(id) {}
+
+            public override void StartRally(Rally rally)
+            {
+                FinishRally();
+            }
+        }
+
+        private class VehicleThatNeverFinishes : VehicleStub
+        {
+            public VehicleThatNeverFinishes(string id) : base(id) { }
+
+            public override void StartRally(Rally rally) {}
+        }
     }
 }

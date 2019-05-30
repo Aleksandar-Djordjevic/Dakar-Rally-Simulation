@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace DakarRallySimulation
 {
-    public class Vehicle
+    public class Vehicle : IAmVehicle
     {
         public event EventHandler<string> VehicleFinishedRally; 
 
@@ -40,14 +40,14 @@ namespace DakarRallySimulation
             State = VehicleState.WaitingStart;
         }
 
-        public Task StartRally(Rally rally)
+        public void StartRally(Rally rally)
         {
             if (State != VehicleState.WaitingStart)
             {
                 throw new InvalidOperationException("Vehicle has already started rally.");
             }
 
-            return GoGo(rally);
+            GoGo(rally);
         }
 
         public VehicleStatistics GetStatistics()

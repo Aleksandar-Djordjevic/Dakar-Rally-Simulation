@@ -17,18 +17,19 @@ namespace DakarRallySimulationTests
             var vehicle = AVehicleBuilder.BuildProperlyWorkingVehicle();
 
             vehicle.StartRally(rally);
-            Action startingRallySecondTime = () => vehicle.StartRally(rally).GetAwaiter().GetResult();
+            Action startingRallySecondTime = () => vehicle.StartRally(rally);
 
             Assert.Throws<InvalidOperationException>(startingRallySecondTime);
         }
 
         [Fact]
-        public void FinishRallyIfWorkingProperly()
+        public async Task PassFinishLineIfWorkingProperly()
         {
             var rally = BuildRally(2);
             var vehicle = AVehicleBuilder.BuildProperlyWorkingVehicle();
 
-            vehicle.StartRally(rally).GetAwaiter().GetResult();
+            vehicle.StartRally(rally);
+            await Task.Delay(TimeSpan.FromSeconds(60));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
@@ -37,12 +38,13 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public void FinishRallyIfLightlyMalfunctioning()
+        public async Task PassFinishLineIfLightlyMalfunctioning()
         {
             var rally = BuildRally(2);
             var vehicle = AVehicleBuilder.BuildLightlyMalfunctioningVehicle();
 
-            vehicle.StartRally(rally).GetAwaiter().GetResult();
+            vehicle.StartRally(rally);
+            await Task.Delay(TimeSpan.FromSeconds(60));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
@@ -51,12 +53,13 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public void NotFinishRallyIfHeavilyMalfunctioning()
+        public async Task NotPassFinishLineIfHeavilyMalfunctioning()
         {
             var rally = BuildRally(2);
             var vehicle = AVehicleBuilder.BuildHeavilyMalfunctioningVehicle();
 
-            vehicle.StartRally(rally).GetAwaiter().GetResult();
+            vehicle.StartRally(rally);
+            await Task.Delay(TimeSpan.FromSeconds(60));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Broken, vehicleStatistics.Status);
@@ -65,12 +68,13 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public void IncludeAllMalfunctioningInStatistics()
+        public async Task IncludeAllMalfunctioningInStatistics()
         {
             var rally = BuildRally(2);
             var vehicle = AVehicleBuilder.BuildVehicleWhichLightlyMalfunctionsInBeginning();
 
-            vehicle.StartRally(rally).GetAwaiter().GetResult();
+            vehicle.StartRally(rally);
+            await Task.Delay(TimeSpan.FromSeconds(60));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(2, vehicleStatistics.Malfunctions.Count);
