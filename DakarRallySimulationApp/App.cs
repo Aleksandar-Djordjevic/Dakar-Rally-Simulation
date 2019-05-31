@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Schema;
+using DakarRallySimulation;
 
 namespace DakarRallySimulationApp
 {
-    public class App : ISimulateDakarRally
+    public class App// : ISimulateDakarRally
     {
         private readonly IAmRallyRepository rallyRepo;
     }
