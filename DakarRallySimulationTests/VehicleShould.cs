@@ -29,7 +29,7 @@ namespace DakarRallySimulationTests
             var vehicle = AVehicleBuilder.BuildProperlyWorkingVehicle();
 
             vehicle.StartRally(rally);
-            await Task.Delay(TimeSpan.FromSeconds(60));
+            await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
@@ -44,7 +44,7 @@ namespace DakarRallySimulationTests
             var vehicle = AVehicleBuilder.BuildLightlyMalfunctioningVehicle();
 
             vehicle.StartRally(rally);
-            await Task.Delay(TimeSpan.FromSeconds(60));
+            await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
@@ -59,7 +59,7 @@ namespace DakarRallySimulationTests
             var vehicle = AVehicleBuilder.BuildHeavilyMalfunctioningVehicle();
 
             vehicle.StartRally(rally);
-            await Task.Delay(TimeSpan.FromSeconds(60));
+            await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(VehicleState.Broken, vehicleStatistics.Status);
@@ -74,7 +74,7 @@ namespace DakarRallySimulationTests
             var vehicle = AVehicleBuilder.BuildVehicleWhichLightlyMalfunctionsInBeginning();
 
             vehicle.StartRally(rally);
-            await Task.Delay(TimeSpan.FromSeconds(60));
+            await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
             Assert.Equal(2, vehicleStatistics.Malfunctions.Count);

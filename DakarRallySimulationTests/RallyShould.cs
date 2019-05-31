@@ -103,7 +103,10 @@ namespace DakarRallySimulationTests
         private abstract class VehicleStub : IAmVehicle
         {
             public event EventHandler FinishedRally;
+            public event EventHandler Moved;
             public string Id { get; }
+            public decimal Distance { get; }
+            public DateTime? FinishedAt { get; }
 
             public VehicleStub(string id)
             {
@@ -115,6 +118,11 @@ namespace DakarRallySimulationTests
             protected void FinishRally()
             {
                 FinishedRally?.Invoke(this, EventArgs.Empty);
+            }
+
+            public int CompareTo(object obj)
+            {
+                throw new NotImplementedException();
             }
         }
 

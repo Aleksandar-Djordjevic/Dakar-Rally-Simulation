@@ -7,6 +7,7 @@ namespace DakarRallySimulation
     public class Vehicle : IAmVehicle
     {
         public event EventHandler FinishedRally; 
+        public event EventHandler Moved; 
 
         public string Id { get; }
         public string TeamName { get; }
@@ -19,10 +20,9 @@ namespace DakarRallySimulation
         private readonly TimeSpan _repairmentDuration;
         private readonly IProvideHealtStatus _healtStatusProvider;
         private readonly int _simulationResolutionTimeInSeconds;
-        private DateTime? _finishTime;
 
         public decimal Distance { get; private set; }
-
+        public DateTime? FinishedAt { get; private set; }
         public VehicleState State { get; private set; }
 
         public Vehicle(string id, string teamName, string model, DateTime manufacturingDate, int maxSpeed,
@@ -57,7 +57,7 @@ namespace DakarRallySimulation
                 Status = State,
                 DistanceFromStart = Distance,
                 Malfunctions = _malfunctionHistory,
-                FinishTime = _finishTime
+                FinishTime = FinishedAt
             };
         }
 
@@ -69,10 +69,12 @@ namespace DakarRallySimulation
             {
                 await Task.Delay(TimeSpan.FromSeconds(_simulationResolutionTimeInSeconds));
                 Distance += (decimal)(_maxSpeed * _simulationResolutionTimeInSeconds) / 3600;
+                OnMoved();
+
                 if (Distance >= rally.Distance)
                 {
                     State = VehicleState.Finished;
-                    _finishTime = DateTime.UtcNow;
+                    FinishedAt = DateTime.UtcNow;
                     break;
                 }
 
@@ -105,6 +107,26 @@ namespace DakarRallySimulation
         protected virtual void OnVehicleFinishedRally()
         {
             FinishedRally?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnMoved()
+        {
+            Moved?.Invoke(this, EventArgs.Empty);
+        }
+
+        public int CompareTo(object obj)
+        {
+            var other = (IAmVehicle)obj;
+            if (FinishedAt != null & other.FinishedAt != null)
+            {
+                return FinishedAt < other.FinishedAt ? -1 : 1;
+            }
+            if (FinishedAt == null & other.FinishedAt == null)
+            {
+                return Distance > other.Distance ? -1 : 1;
+            }
+
+            return FinishedAt != null ? -1 : 1;
         }
     }
 

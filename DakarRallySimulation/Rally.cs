@@ -8,6 +8,10 @@ namespace DakarRallySimulation
 {
     public class Rally
     {
+        public event EventHandler Started;
+        public event EventHandler<IAmVehicle> VehicleAdded;
+        public event EventHandler<IAmVehicle> VehicleRemoved;
+
         public int Year { get; }
         public int Distance { get; }
         public bool IsFinished { get; private set; }
@@ -42,7 +46,12 @@ namespace DakarRallySimulation
         {
             _state.VehicleFinishedRally(((IAmVehicle)vehicle).Id);
         }
-        
+
+        protected virtual void OnStarted()
+        {
+            Started?.Invoke(this, EventArgs.Empty);
+        }
+
         private abstract class RallyState
         {
             protected readonly Rally Rally;
@@ -94,6 +103,7 @@ namespace DakarRallySimulation
                 if (Rally.Vehicles.Any())
                 {
                     Rally._state = new RallyRunning(Rally);
+                    Rally.OnStarted();
                     Rally.Vehicles.ForEach(vehicle => vehicle.StartRally(Rally));
                 }
                 else
