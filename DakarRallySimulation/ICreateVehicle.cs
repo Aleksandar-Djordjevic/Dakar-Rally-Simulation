@@ -4,10 +4,10 @@ namespace DakarRallySimulation
 {
     public interface ICreateVehicle
     {
-        Vehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate);
-        Vehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate);
-        Vehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate);
-        Vehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate);
-        Vehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate);
+        IAmVehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate);
+        IAmVehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate);
+        IAmVehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate);
+        IAmVehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate);
+        IAmVehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate);
     }
 }

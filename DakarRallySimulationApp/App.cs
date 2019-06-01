@@ -8,41 +8,42 @@ namespace DakarRallySimulationApp
     public class App : ISimulateDakarRally
     {
         private readonly ICreateRally _createRallyService;
+        private readonly IAddVehicleToRally _addVehicleToRallyService;
 
-        public App(ICreateRally createRallyService)
+        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService)
         {
             _createRallyService = createRallyService;
+            _addVehicleToRallyService = addVehicleToRallyService;
         }
-
 
         public Result CreateRally(int year)
         {
             return _createRallyService.CreateRally(year);
         }
 
-        public void AddSportCar(string rallyId, string model, DateTime manufacturingDate)
+        public Result AddSportCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
         {
-            throw new NotImplementedException();
+            return _addVehicleToRallyService.AddSportCar(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
-        public void AddTerrainCar(string rallyId, string model, DateTime manufacturingDate)
+        public Result AddTerrainCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
         {
-            throw new NotImplementedException();
+            return _addVehicleToRallyService.AddTerrainCar(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
-        public void AddTruck(string rallyId, string model, DateTime manufacturingDate)
+        public Result AddTruck(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
         {
-            throw new NotImplementedException();
+            return _addVehicleToRallyService.AddTruck(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
-        public void AddSportMotorCycle(string rallyId, string model, DateTime manufacturingDate)
+        public Result AddSportMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
         {
-            throw new NotImplementedException();
+            return _addVehicleToRallyService.AddSportMotorcycle(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
-        public void AddCrossMotorCycle(string rallyId, string model, DateTime manufacturingDate)
+        public Result AddCrossMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
         {
-            throw new NotImplementedException();
+            return _addVehicleToRallyService.AddCrossMotorcycle(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
         public void RemoveVehicleFromRally(string rallyId, string vehicleId)

@@ -6,9 +6,9 @@ namespace DakarRallySimulationApp
 {
     public class RallyRepository : IAmRallyRepository
     {
-        private readonly Dictionary<string, Rally> _rallies = new Dictionary<string, Rally>();
+        private readonly Dictionary<string, IAmRally> _rallies = new Dictionary<string, IAmRally>();
 
-        public Result Add(Rally rally)
+        public Result Add(IAmRally rally)
         {
             return Result.Create(!_rallies.ContainsKey(rally.Id), "Already exists.")
                 .OnSuccess(() => _rallies.Add(rally.Id, rally));
@@ -19,7 +19,7 @@ namespace DakarRallySimulationApp
             return _rallies.ContainsKey(rallyId);
         }
 
-        public Result<Rally> Find(string rallyId)
+        public Result<IAmRally> Find(string rallyId)
         {
             return Result.Create(_rallies.TryGetValue(rallyId, out var rally), rally, "Not found.");
         }        

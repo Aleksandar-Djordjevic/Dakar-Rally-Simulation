@@ -5,8 +5,8 @@ namespace DakarRallySimulationApp
 {
     public interface IAmRallyRepository
     {
-        Result Add(Rally rally);
+        Result Add(IAmRally rally);
         bool Exists(string rallyId);
-        Result<Rally> Find(string rallyId);
+        Result<IAmRally> Find(string rallyId);
     }
 }

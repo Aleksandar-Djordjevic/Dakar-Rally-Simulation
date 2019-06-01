@@ -41,7 +41,7 @@ namespace DakarRallySimulation
             _simulationResolutionTimeInSeconds = simulationResolutionTimeInSeconds;
         }
 
-        public Vehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate)
+        public IAmVehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
                 id, 
@@ -54,7 +54,7 @@ namespace DakarRallySimulation
                 _healtStatusProviderBuilder.BuildForSportCar());
         }
 
-        public Vehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate)
+        public IAmVehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
                 id,
@@ -67,7 +67,7 @@ namespace DakarRallySimulation
                 _healtStatusProviderBuilder.BuildForTerrainCar());
         }
 
-        public Vehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate)
+        public IAmVehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
                 id,
@@ -80,7 +80,7 @@ namespace DakarRallySimulation
                 _healtStatusProviderBuilder.BuildForTruck());
         }
 
-        public Vehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
+        public IAmVehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
                 id,
@@ -93,7 +93,7 @@ namespace DakarRallySimulation
                 _healtStatusProviderBuilder.BuildForSportMotorcycle());
         }
 
-        public Vehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
+        public IAmVehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
                 id,

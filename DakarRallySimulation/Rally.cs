@@ -7,7 +7,7 @@ using CSharpFunctionalExtensions;
 
 namespace DakarRallySimulation
 {
-    public class Rally
+    public class Rally : IAmRally
     {
         public event EventHandler Started;
         public event EventHandler<IAmVehicle> VehicleAdded;
@@ -78,7 +78,7 @@ namespace DakarRallySimulation
             public override Result AddVehicle(IAmVehicle vehicle)
             {
                 if (Rally.Vehicles.Any(alreadyAdded => alreadyAdded.Id == vehicle.Id))
-                    return Result.Fail("Vehicle already added to the rally.");
+                    return Result.Fail("Vehicle with same ID already added to the rally.");
 
                 Rally.Vehicles.Add(vehicle);
                 Rally._vehiclesStillInRally.Add(vehicle.Id);

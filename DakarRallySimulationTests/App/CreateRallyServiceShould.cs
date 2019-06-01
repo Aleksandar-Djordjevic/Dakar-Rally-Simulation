@@ -17,8 +17,8 @@ namespace DakarRallySimulationTests
         {
             var repoMock = new Mock<IAmRallyRepository>();
             repoMock.Setup(repo => repo.Find(It.IsAny<string>()))
-                .Returns(Result.Fail<Rally>("Not found"));
-            repoMock.Setup(repo => repo.Add(It.IsAny<Rally>()))
+                .Returns(Result.Fail<IAmRally>("Not found"));
+            repoMock.Setup(repo => repo.Add(It.IsAny<IAmRally>()))
                 .Returns(Result.Ok);
             var service = new CreateRallyService(repoMock.Object);
 
