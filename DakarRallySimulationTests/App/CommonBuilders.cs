@@ -45,7 +45,7 @@ namespace DakarRallySimulationTests.App
             return rallyMock.Object;
         }
 
-        public static IAmRally GetRallyThatAcceptsVehicles(string vehicleId)
+        public static IAmRally GetRallyThatAcceptsVehicle(string vehicleId)
         {
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.AddVehicle(It.Is<IAmVehicle>(vehicle => vehicle.Id == vehicleId)))
@@ -53,7 +53,7 @@ namespace DakarRallySimulationTests.App
             return rallyMock.Object;
         }
 
-        public static IAmRally GetRallyThatDoesNotAcceptsVehicles(string vehicleId, string reason)
+        public static IAmRally GetRallyThatDoesNotAcceptsVehicle(string vehicleId, string reason)
         {
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.AddVehicle(It.Is<IAmVehicle>(vehicle => vehicle.Id == vehicleId)))

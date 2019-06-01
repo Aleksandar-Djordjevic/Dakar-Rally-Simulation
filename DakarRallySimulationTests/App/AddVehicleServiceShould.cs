@@ -33,7 +33,7 @@ namespace DakarRallySimulationTests.App
             var vehicleFactory = new FakeVehicleBuilder();
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
-                CommonBuilders.GetRallyThatAcceptsVehicles(vehicleId));
+                CommonBuilders.GetRallyThatAcceptsVehicle(vehicleId));
             var service = new AddVehicleService(rallyRepo, vehicleFactory);
 
             var result = service.AddSportCar(rallyId, vehicleId, "BMW Racing", "BMW 3M", DateTime.UtcNow);
@@ -51,7 +51,7 @@ namespace DakarRallySimulationTests.App
             var vehicleFactory = new FakeVehicleBuilder();
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
-                CommonBuilders.GetRallyThatDoesNotAcceptsVehicles(vehicleId, forReason));
+                CommonBuilders.GetRallyThatDoesNotAcceptsVehicle(vehicleId, forReason));
             var service = new AddVehicleService(rallyRepo, vehicleFactory);
 
             var result = service.AddSportCar(rallyId, vehicleId, "BMW Racing", "BMW 3M", DateTime.UtcNow);
