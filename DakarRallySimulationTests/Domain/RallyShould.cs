@@ -55,9 +55,22 @@ namespace DakarRallySimulationTests
         }
 
         [Fact]
-        public void SucceedToStartWhenItHasNotBeenStarted()
+        public void FailToStartWhenItHasNotBeenStartedYetButDoesNotHaveVehicles()
         {
             var rally = new Rally(2019, 2);
+
+            var operationResult = rally.Start();
+
+            Assert.True(operationResult.IsFailure);
+            Assert.Equal(ErrorMessages.CannotStartRallyWithNoVehicles, operationResult.Error);
+        }
+
+        [Fact]
+        public void SucceedToStartWhenItHasNotBeenStartedYetAndHasVehicles()
+        {
+            var rally = new Rally(2019, 2);
+            var vehicle = new VehicleThatImmediatelyFinishes("Id1");
+            rally.AddVehicle(vehicle);
 
             var operationResult = rally.Start();
 
