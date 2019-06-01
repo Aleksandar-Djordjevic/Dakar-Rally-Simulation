@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
 namespace DakarRallySimulation
 {
@@ -29,17 +30,17 @@ namespace DakarRallySimulation
             _state = new RallyPending(this);
         }
 
-        public OperationResult<Rally, string> AddVehicle(IAmVehicle vehicle)
+        public Result AddVehicle(IAmVehicle vehicle)
         {
             return _state.AddVehicle(vehicle);
         }
 
-        public OperationResult<Rally, string> RemoveVehicle(string vehicleId)
+        public Result RemoveVehicle(string vehicleId)
         {
             return _state.RemoveVehicle(vehicleId);
         }
 
-        public OperationResult<Rally, string> Start()
+        public Result Start()
         {
             return _state.Start();
         }
@@ -63,9 +64,9 @@ namespace DakarRallySimulation
                 Rally = rally;
             }
 
-            public abstract OperationResult<Rally, string> AddVehicle(IAmVehicle vehicle);
-            public abstract OperationResult<Rally, string> RemoveVehicle(string vehicleId);
-            public abstract OperationResult<Rally, string> Start();
+            public abstract Result AddVehicle(IAmVehicle vehicle);
+            public abstract Result RemoveVehicle(string vehicleId);
+            public abstract Result Start();
 
             public abstract void VehicleFinishedRally(string vehicleId);
         }
@@ -74,33 +75,33 @@ namespace DakarRallySimulation
         {
             public RallyPending(Rally rally) : base (rally) { }
 
-            public override OperationResult<Rally, string> AddVehicle(IAmVehicle vehicle)
+            public override Result AddVehicle(IAmVehicle vehicle)
             {
                 if (Rally.Vehicles.Any(alreadyAdded => alreadyAdded.Id == vehicle.Id))
-                    return OperationResult<Rally, string>.Failed("Vehicle already added to the rally.");
+                    return Result.Fail("Vehicle already added to the rally.");
 
                 Rally.Vehicles.Add(vehicle);
                 Rally._vehiclesStillInRally.Add(vehicle.Id);
                 vehicle.FinishedRally += Rally.WhenVehicleFinishesRally;
 
-                return OperationResult<Rally, string>.Done(Rally);
+                return Result.Ok();
             }
 
-            public override OperationResult<Rally, string> RemoveVehicle(string vehicleId)
+            public override Result RemoveVehicle(string vehicleId)
             {
                 var vehicle = Rally.Vehicles.Find(v => v.Id == vehicleId);
 
                 if (vehicle == null)
-                    return OperationResult<Rally, string>.Failed("Vehicle does not exist.");
+                    return Result.Fail("Vehicle does not exist.");
 
                 Rally.Vehicles.Remove(vehicle);
                 Rally._vehiclesStillInRally.Remove(vehicle.Id);
                 vehicle.FinishedRally -= Rally.WhenVehicleFinishesRally;
 
-                return OperationResult<Rally, string>.Done(Rally);
+                return Result.Ok();
             }
 
-            public override OperationResult<Rally, string> Start()
+            public override Result Start()
             {
                 if (Rally.Vehicles.Any())
                 {
@@ -112,7 +113,7 @@ namespace DakarRallySimulation
                 {
                     Rally._state = new RallyFinished(Rally);
                 }
-                return OperationResult<Rally, string>.Done(Rally);
+                return Result.Ok();
             }
 
             public override void VehicleFinishedRally(string vehicleId)
@@ -125,19 +126,19 @@ namespace DakarRallySimulation
         {
             public RallyRunning(Rally rally) : base (rally) { }
 
-            public override OperationResult<Rally, string> AddVehicle(IAmVehicle vehicle)
+            public override Result AddVehicle(IAmVehicle vehicle)
             {
-                return OperationResult<Rally, string>.Failed("Rally has already started. Vehicle cannot be added.");
+                return Result.Fail("Rally has already started. Vehicle cannot be added.");
             }
 
-            public override OperationResult<Rally, string> RemoveVehicle(string vehicleId)
+            public override Result RemoveVehicle(string vehicleId)
             {
-                return OperationResult<Rally, string>.Failed("Rally has already started. Vehicle cannot be removed.");
+                return Result.Fail("Rally has already started. Vehicle cannot be removed.");
             }
 
-            public override OperationResult<Rally, string> Start()
+            public override Result Start()
             {
-                return OperationResult<Rally, string>.Failed("Rally is already started.");
+                return Result.Fail("Rally is already started.");
             }
 
             public override void VehicleFinishedRally(string vehicleId)
@@ -157,19 +158,19 @@ namespace DakarRallySimulation
                 rally.IsFinished = true;
             }
 
-            public override OperationResult<Rally, string> AddVehicle(IAmVehicle vehicle)
+            public override Result AddVehicle(IAmVehicle vehicle)
             {
-                return OperationResult<Rally, string>.Failed("Rally has already started. Vehicle cannot be added.");
+                return Result.Fail("Rally has already started. Vehicle cannot be added.");
             }
 
-            public override OperationResult<Rally, string> RemoveVehicle(string vehicleId)
+            public override Result RemoveVehicle(string vehicleId)
             {
-                return OperationResult<Rally, string>.Failed("Rally has already started. Vehicle cannot be removed.");
+                return Result.Fail("Rally has already started. Vehicle cannot be removed.");
             }
 
-            public override OperationResult<Rally, string> Start()
+            public override Result Start()
             {
-                return OperationResult<Rally, string>.Failed("Rally is already started.");
+                return Result.Fail("Rally is already started.");
             }
 
             public override void VehicleFinishedRally(string vehicleId)

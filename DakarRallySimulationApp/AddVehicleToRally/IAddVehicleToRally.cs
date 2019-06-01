@@ -1,13 +1,14 @@
 ﻿using System;
+using CSharpFunctionalExtensions;
 
 namespace DakarRallySimulationApp
 {
     public interface IAddVehicleToRally
     {
-        void AddSportCar(string rallyId, string model, DateTime manufacturingDate);
-        void AddTerrainCar(string rallyId, string model, DateTime manufacturingDate);
-        void AddTruck(string rallyId, string model, DateTime manufacturingDate);
-        void AddSportMotorCycle(string rallyId, string model, DateTime manufacturingDate);
-        void AddCrossMotorCycle(string rallyId, string model, DateTime manufacturingDate);
+        Result AddSportCar(string rallyId, string model, DateTime manufacturingDate);
+        Result AddTerrainCar(string rallyId, string model, DateTime manufacturingDate);
+        Result AddTruck(string rallyId, string model, DateTime manufacturingDate);
+        Result AddSportMotorCycle(string rallyId, string model, DateTime manufacturingDate);
+        Result AddCrossMotorCycle(string rallyId, string model, DateTime manufacturingDate);
     }
 }
