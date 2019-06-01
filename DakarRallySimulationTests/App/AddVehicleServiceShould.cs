@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CSharpFunctionalExtensions;
-using DakarRallySimulation;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.Domain;
-using Moq;
 using Xunit;
 using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
 
-namespace DakarRallySimulationTests.App
+namespace DakarRallySimulation.Tests.App
 {
     public partial class AddVehicleServiceShould
     {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DakarRallySimulation.App;
+﻿using DakarRallySimulation.App;
 using DakarRallySimulation.App.StartRally;
 using Xunit;
 
-namespace DakarRallySimulationTests.App
+namespace DakarRallySimulation.Tests.App
 {
     public class StartRallyServiceShould
     {

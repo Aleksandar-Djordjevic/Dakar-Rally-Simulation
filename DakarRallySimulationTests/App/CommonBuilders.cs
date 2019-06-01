@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using CSharpFunctionalExtensions;
-using DakarRallySimulation;
 using DakarRallySimulation.App;
 using DakarRallySimulation.Domain;
 using Moq;
 
-namespace DakarRallySimulationTests.App
+namespace DakarRallySimulation.Tests.App
 {
     public class CommonBuilders
     {

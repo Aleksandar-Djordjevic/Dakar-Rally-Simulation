@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
-using DakarRallySimulation;
 using DakarRallySimulation.Domain;
 using Xunit;
 
-namespace DakarRallySimulationTests
+namespace DakarRallySimulation.Tests.Domain
 {
     public class RallyShould
     {

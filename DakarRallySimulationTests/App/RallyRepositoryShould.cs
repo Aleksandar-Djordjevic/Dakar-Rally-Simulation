@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DakarRallySimulation;
-using DakarRallySimulation.App;
+﻿using DakarRallySimulation.App;
 using DakarRallySimulation.Domain;
 using Xunit;
 
-namespace DakarRallySimulationTests
+namespace DakarRallySimulation.Tests.App
 {
     public class RallyRepositoryShould
     {

@@ -1,13 +1,9 @@
-﻿using DakarRallySimulation;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using DakarRallySimulation.Domain;
 using Xunit;
 
-namespace DakarRallySimulationTests
+namespace DakarRallySimulation.Tests.Domain
 {
     public class VehicleShould
     {

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CSharpFunctionalExtensions;
-using DakarRallySimulation;
-using DakarRallySimulation.App;
+﻿using DakarRallySimulation.App;
 using DakarRallySimulation.App.RemoveVehicleFromRally;
-using Moq;
 using Xunit;
 
-namespace DakarRallySimulationTests.App
+namespace DakarRallySimulation.Tests.App
 {
     public class RemoveVehicleServiceShould
     {

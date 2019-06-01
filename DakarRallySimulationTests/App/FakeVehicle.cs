@@ -1,8 +1,7 @@
 ﻿using System;
-using DakarRallySimulation;
 using DakarRallySimulation.Domain;
 
-namespace DakarRallySimulationTests.App
+namespace DakarRallySimulation.Tests.App
 {
     
     public class FakeVehicle : IAmVehicle
