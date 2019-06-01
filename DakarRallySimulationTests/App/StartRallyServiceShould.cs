@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DakarRallySimulationApp;
-using DakarRallySimulationApp.RemoveVehicleFromRally;
-using DakarRallySimulationApp.StartRally;
+using DakarRallySimulation.App;
+using DakarRallySimulation.App.StartRally;
 using Xunit;
 
 namespace DakarRallySimulationTests.App

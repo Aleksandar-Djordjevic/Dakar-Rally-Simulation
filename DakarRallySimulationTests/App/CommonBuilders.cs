@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation;
-using DakarRallySimulationApp;
+using DakarRallySimulation.App;
+using DakarRallySimulation.Domain;
 using Moq;
 
 namespace DakarRallySimulationTests.App

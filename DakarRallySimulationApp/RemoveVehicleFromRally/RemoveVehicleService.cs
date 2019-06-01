@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CSharpFunctionalExtensions;
-using DakarRallySimulation;
+﻿using CSharpFunctionalExtensions;
+using DakarRallySimulation.Domain;
 
-namespace DakarRallySimulationApp.RemoveVehicleFromRally
+namespace DakarRallySimulation.App.RemoveVehicleFromRally
 {
     public class RemoveVehicleService : IRemoveVehicleFromRally
     {

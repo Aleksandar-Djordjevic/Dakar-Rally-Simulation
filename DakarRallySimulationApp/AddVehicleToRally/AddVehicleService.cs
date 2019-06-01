@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using CSharpFunctionalExtensions;
-using DakarRallySimulation;
+using DakarRallySimulation.Domain;
 
-namespace DakarRallySimulationApp.AddVehicleToRally
+namespace DakarRallySimulation.App.AddVehicleToRally
 {
     public class AddVehicleService : IAddVehicleToRally
     {

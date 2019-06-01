@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DakarRallySimulation
+namespace DakarRallySimulation.Domain
 {
     public class VehicleStatistics
     {

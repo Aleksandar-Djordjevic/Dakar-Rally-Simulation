@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using DakarRallySimulationDomain;
 
-namespace DakarRallySimulation
+namespace DakarRallySimulation.Domain
 {
     public class Rally : IAmRally
     {

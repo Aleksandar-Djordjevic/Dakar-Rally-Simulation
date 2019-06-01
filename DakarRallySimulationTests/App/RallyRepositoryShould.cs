@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using DakarRallySimulation;
-using DakarRallySimulationApp;
+using DakarRallySimulation.App;
+using DakarRallySimulation.Domain;
 using Xunit;
 
 namespace DakarRallySimulationTests

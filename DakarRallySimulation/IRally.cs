@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
-namespace DakarRallySimulation
+namespace DakarRallySimulation.Domain
 {
     public interface IAmRally
     {

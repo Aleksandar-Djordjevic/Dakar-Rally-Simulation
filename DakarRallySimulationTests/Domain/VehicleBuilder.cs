@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DakarRallySimulation;
+using DakarRallySimulation.Domain;
 using Moq;
 
 namespace DakarRallySimulationTests

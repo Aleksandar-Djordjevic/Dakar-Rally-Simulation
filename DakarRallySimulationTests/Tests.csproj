@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Tests</AssemblyName>
+    <RootNamespace>DakarRallySimulation.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DakarRallySimulationApp\DakarRallySimulationApp.csproj" />
-    <ProjectReference Include="..\DakarRallySimulation\DakarRallySimulationDomain.csproj" />
+    <ProjectReference Include="..\DakarRallySimulationApp\App.csproj" />
+    <ProjectReference Include="..\DakarRallySimulation\Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation;
-using DakarRallySimulationApp;
-using DakarRallySimulationApp.AddVehicleToRally;
+using DakarRallySimulation.App.AddVehicleToRally;
+using DakarRallySimulation.Domain;
 using Moq;
 using Xunit;
+using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
 
 namespace DakarRallySimulationTests.App
 {

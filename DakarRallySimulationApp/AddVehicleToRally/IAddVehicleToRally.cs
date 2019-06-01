@@ -1,7 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App.AddVehicleToRally
 {
     public interface IAddVehicleToRally
     {

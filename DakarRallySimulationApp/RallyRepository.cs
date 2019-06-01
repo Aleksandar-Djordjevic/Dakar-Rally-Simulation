@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using CSharpFunctionalExtensions;
-using DakarRallySimulation;
+using DakarRallySimulation.Domain;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App
 {
     public class RallyRepository : IAmRallyRepository
     {

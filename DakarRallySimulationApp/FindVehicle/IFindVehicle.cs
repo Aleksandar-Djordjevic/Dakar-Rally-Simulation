@@ -1,6 +1,7 @@
 ﻿using System;
+using DakarRallySimulation.App.GetVehicleStatistics;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App.FindVehicle
 {
     public interface IFindVehicle
     {

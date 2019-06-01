@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DakarRallySimulationDomain
+﻿namespace DakarRallySimulation.Domain
 {
     public class ErrorMessages
     {

@@ -1,10 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Xml.Schema;
 using CSharpFunctionalExtensions;
-using DakarRallySimulationApp.GetVehicleStatistics;
+using DakarRallySimulation.App.AddVehicleToRally;
+using DakarRallySimulation.App.CreateRally;
+using DakarRallySimulation.App.GetLeaderboard;
+using DakarRallySimulation.App.GetVehicleStatistics;
+using DakarRallySimulation.App.RemoveVehicleFromRally;
+using DakarRallySimulation.App.StartRally;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App
 {
     public class App : ISimulateDakarRally
     {

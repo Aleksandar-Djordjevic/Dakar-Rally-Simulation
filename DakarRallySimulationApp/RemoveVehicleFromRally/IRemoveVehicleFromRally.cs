@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App.RemoveVehicleFromRally
 {
     public interface IRemoveVehicleFromRally
     {

@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using DakarRallySimulationApp.GetVehicleStatistics;
 
-namespace DakarRallySimulationApp
+namespace DakarRallySimulation.App.GetVehicleStatistics
 {
     public interface IProvideVehicleStatistics
     {

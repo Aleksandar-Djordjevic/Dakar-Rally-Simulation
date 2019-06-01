@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 
-namespace DakarRallySimulation
+namespace DakarRallySimulation.Domain
 {
     public interface IAmVehicle : IComparable
     {

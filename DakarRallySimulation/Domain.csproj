@@ -2,14 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Domain</AssemblyName>
+    <RootNamespace>DakarRallySimulation.Domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CSharpFunctionalExtensions" Version="1.18.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DakarRallySimulation\DakarRallySimulationDomain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DakarRallySimulation
+namespace DakarRallySimulation.Domain
 {
     public class HealtStatusProvider : IProvideHealtStatus
     {

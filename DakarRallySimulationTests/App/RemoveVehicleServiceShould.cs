@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation;
-using DakarRallySimulationApp;
-using DakarRallySimulationApp.AddVehicleToRally;
-using DakarRallySimulationApp.RemoveVehicleFromRally;
+using DakarRallySimulation.App;
+using DakarRallySimulation.App.RemoveVehicleFromRally;
 using Moq;
 using Xunit;
 

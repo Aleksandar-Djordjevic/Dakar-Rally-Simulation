@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation;
-using DakarRallySimulationApp;
-using DakarRallySimulationApp.CreateRally;
+using DakarRallySimulation.App;
+using DakarRallySimulation.App.CreateRally;
+using DakarRallySimulation.Domain;
 using Moq;
 using Xunit;
 

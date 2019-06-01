@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-using DakarRallySimulation;
+﻿using CSharpFunctionalExtensions;
+using DakarRallySimulation.Domain;
 
-namespace DakarRallySimulationApp.GetVehicleStatistics
+namespace DakarRallySimulation.App.GetVehicleStatistics
 {
     public class VehicleStatisticsService : IProvideVehicleStatistics
     {

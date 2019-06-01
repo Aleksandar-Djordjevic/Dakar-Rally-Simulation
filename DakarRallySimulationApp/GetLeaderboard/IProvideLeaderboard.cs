@@ -1,4 +1,4 @@
-﻿namespace DakarRallySimulationApp
+﻿namespace DakarRallySimulation.App.GetLeaderboard
 {
     public interface IProvideLeaderboard
     {

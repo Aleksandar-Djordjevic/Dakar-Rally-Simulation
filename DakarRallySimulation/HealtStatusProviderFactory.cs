@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DakarRallySimulation
+﻿namespace DakarRallySimulation.Domain
 {
     public class HealtStatusProviderFactory : ICreateHealtStatusProvider
     {

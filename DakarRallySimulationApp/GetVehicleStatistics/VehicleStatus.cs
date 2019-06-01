@@ -1,4 +1,4 @@
-﻿namespace DakarRallySimulationApp
+﻿namespace DakarRallySimulation.App.GetVehicleStatistics
 {
     public enum VehicleStatus
     {

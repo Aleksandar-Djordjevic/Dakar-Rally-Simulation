@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DakarRallySimulationApp.GetRallyStatus
+﻿namespace DakarRallySimulation.App.GetRallyStatus
 {
     public enum RallyStatus
     {

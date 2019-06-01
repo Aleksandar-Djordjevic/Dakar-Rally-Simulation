@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-
-namespace DakarRallySimulationApp.GetVehicleStatistics
+namespace DakarRallySimulation.App.GetVehicleStatistics
 {
     public class VehicleStatistics
     {

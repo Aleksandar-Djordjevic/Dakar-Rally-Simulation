@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DakarRallySimulation;
+using DakarRallySimulation.Domain;
 using Xunit;
 
 namespace DakarRallySimulationTests
