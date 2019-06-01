@@ -1,7 +1,9 @@
-﻿namespace DakarRallySimulationApp
+﻿using CSharpFunctionalExtensions;
+
+namespace DakarRallySimulationApp
 {
     public interface IStartRally
     {
-        void StartRally(string rallyId);
+        Result StartRally(string rallyId);
     }
 }

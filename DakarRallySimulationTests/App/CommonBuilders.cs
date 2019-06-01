@@ -37,11 +37,11 @@ namespace DakarRallySimulationTests.App
             return rallyMock.Object;
         }
 
-        public static IAmRally GetRallyThatDoesNotRemoveVehicle(string vehicleId, string reason)
+        public static IAmRally GetRallyThatDoesNotRemoveVehicle(string vehicleId, string forReason)
         {
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.RemoveVehicle(vehicleId))
-                .Returns(Result.Fail(reason));
+                .Returns(Result.Fail(forReason));
             return rallyMock.Object;
         }
 
@@ -53,14 +53,29 @@ namespace DakarRallySimulationTests.App
             return rallyMock.Object;
         }
 
-        public static IAmRally GetRallyThatDoesNotAcceptsVehicle(string vehicleId, string reason)
+        public static IAmRally GetRallyThatDoesNotAcceptsVehicle(string vehicleId, string forReason)
         {
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.AddVehicle(It.Is<IAmVehicle>(vehicle => vehicle.Id == vehicleId)))
-                .Returns(Result.Fail(reason));
+                .Returns(Result.Fail(forReason));
             return rallyMock.Object;
         }
 
 
+        public static IAmRally GetRallyThatSuccessfullyStarts()
+        {
+            var rallyMock = new Mock<IAmRally>();
+            rallyMock.Setup(rally => rally.Start())
+                .Returns(Result.Ok());
+            return rallyMock.Object;
+        }
+
+        public static IAmRally GetRallyThatUnsuccessfullyStarts(string forReason)
+        {
+            var rallyMock = new Mock<IAmRally>();
+            rallyMock.Setup(rally => rally.Start())
+                .Returns(Result.Fail(forReason));
+            return rallyMock.Object;
+        }
     }
 }

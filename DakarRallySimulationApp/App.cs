@@ -9,11 +9,15 @@ namespace DakarRallySimulationApp
     {
         private readonly ICreateRally _createRallyService;
         private readonly IAddVehicleToRally _addVehicleToRallyService;
+        private readonly IRemoveVehicleFromRally _removeVehicleFromRallyService;
+        private readonly IStartRally _startRallyService;
 
-        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService)
+        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService)
         {
             _createRallyService = createRallyService;
             _addVehicleToRallyService = addVehicleToRallyService;
+            _removeVehicleFromRallyService = removeVehicleFromRallyService;
+            _startRallyService = startRallyService;
         }
 
         public Result CreateRally(int year)
@@ -48,12 +52,12 @@ namespace DakarRallySimulationApp
 
         public Result RemoveVehicleFromRally(string rallyId, string vehicleId)
         {
-            throw new NotImplementedException();
+            return _removeVehicleFromRallyService.RemoveVehicleFromRally(rallyId, vehicleId);
         }
 
-        public void StartRally(string rallyId)
+        public Result StartRally(string rallyId)
         {
-            throw new NotImplementedException();
+            return _startRallyService.StartRally(rallyId);
         }
 
         public void GetLeaderboard()
