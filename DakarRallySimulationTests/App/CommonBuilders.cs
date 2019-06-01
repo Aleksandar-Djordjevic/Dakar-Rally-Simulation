@@ -77,5 +77,23 @@ namespace DakarRallySimulationTests.App
                 .Returns(Result.Fail(forReason));
             return rallyMock.Object;
         }
+
+        public static IAmRally GetRallyThatDoesNotHaveVehicle(string vehicleId)
+        {
+            var rallyMock = new Mock<IAmRally>();
+            rallyMock.Setup(rally => rally.Vehicles)
+                .Returns(new Dictionary<string, IAmVehicle>());
+            return rallyMock.Object;
+        }
+
+        public static IAmRally GetRallyThatHasVehicle(string vehicleId, FakeVehicle vehicle)
+        {
+            var vehicles = new Dictionary<string, IAmVehicle>();
+            vehicles.Add(vehicle.Id, vehicle);
+            var rallyMock = new Mock<IAmRally>();
+            rallyMock.Setup(rally => rally.Vehicles)
+                .Returns(vehicles);
+            return rallyMock.Object;
+        }
     }
 }

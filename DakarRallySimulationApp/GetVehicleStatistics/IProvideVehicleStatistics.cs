@@ -1,7 +1,10 @@
-﻿namespace DakarRallySimulationApp
+﻿using CSharpFunctionalExtensions;
+using DakarRallySimulationApp.GetVehicleStatistics;
+
+namespace DakarRallySimulationApp
 {
     public interface IProvideVehicleStatistics
     {
-        void GetVehicleStatistics(string vehicleId);
+        Result<VehicleStatistics> GetVehicleStatistics(string rallyId, string vehicleId);
     }
 }

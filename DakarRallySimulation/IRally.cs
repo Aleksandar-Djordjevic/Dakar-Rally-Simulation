@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
 namespace DakarRallySimulation
@@ -9,6 +10,7 @@ namespace DakarRallySimulation
         string Id { get; }
         bool IsFinished { get; }
         int Year { get; }
+        Dictionary<string, IAmVehicle> Vehicles { get; }
 
         event EventHandler Started;
         event EventHandler<IAmVehicle> VehicleAdded;

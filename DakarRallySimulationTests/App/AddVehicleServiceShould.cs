@@ -10,7 +10,7 @@ using Xunit;
 
 namespace DakarRallySimulationTests.App
 {
-    public class AddVehicleServiceShould
+    public partial class AddVehicleServiceShould
     {
         [Fact]
         public void FailWhenRallyDoesNotExist()
@@ -93,26 +93,6 @@ namespace DakarRallySimulationTests.App
                 VehicleRequested = true;
                 return new FakeVehicle(id);
             }
-        }
-
-        private class FakeVehicle : IAmVehicle
-        {
-            public FakeVehicle(string vehicleId)
-            {
-                Id = vehicleId;
-            }
-            public int CompareTo(object obj)
-            {
-                return 1;
-            }
-
-            public event EventHandler FinishedRally;
-            public event EventHandler Moved;
-            public string Id { get; }
-            public decimal Distance { get; }
-            public DateTime? FinishedAt { get; }
-            public void StartRally(Rally rally)
-            {}
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Xml.Schema;
 using CSharpFunctionalExtensions;
+using DakarRallySimulationApp.GetVehicleStatistics;
 
 namespace DakarRallySimulationApp
 {
@@ -11,6 +12,7 @@ namespace DakarRallySimulationApp
         private readonly IAddVehicleToRally _addVehicleToRallyService;
         private readonly IRemoveVehicleFromRally _removeVehicleFromRallyService;
         private readonly IStartRally _startRallyService;
+        private readonly IProvideVehicleStatistics _vehicleStatisticsService;
 
         public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService)
         {
@@ -70,9 +72,9 @@ namespace DakarRallySimulationApp
             throw new NotImplementedException();
         }
 
-        public void GetVehicleStatistics(string vehicleId)
+        public Result<VehicleStatistics> GetVehicleStatistics(string rallyId, string vehicleId)
         {
-            throw new NotImplementedException();
+            return _vehicleStatisticsService.GetVehicleStatistics(rallyId, vehicleId);
         }
 
         public void FindVehicle(string team, string model, DateTime manufacturingDate, VehicleStatus status)
