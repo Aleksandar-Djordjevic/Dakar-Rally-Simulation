@@ -42,7 +42,7 @@ namespace DakarRallySimulationTests.App
         }
 
         [Fact]
-        public void ReturnFailWhenRallyExistsAndDoesNotAcceptVehicle()
+        public void ReturnFailWhenRallyExistsAndDoesNotRemoveVehicle()
         {
             var rallyId = "rally1";
             var vehicleId = "vehicle1";
