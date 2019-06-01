@@ -12,6 +12,7 @@ namespace DakarRallySimulation
         public event EventHandler<IAmVehicle> VehicleAdded;
         public event EventHandler<IAmVehicle> VehicleRemoved;
 
+        public string Id { get; }
         public int Year { get; }
         public int Distance { get; }
         public bool IsFinished { get; private set; }
@@ -22,6 +23,7 @@ namespace DakarRallySimulation
 
         public Rally(int year, int distance)
         {
+            Id = year.ToString();
             Year = year;
             Distance = distance;
             _state = new RallyPending(this);

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DakarRallySimulationApp\DakarRallySimulationApp.csproj" />
     <ProjectReference Include="..\DakarRallySimulation\DakarRallySimulationDomain.csproj" />
   </ItemGroup>
 

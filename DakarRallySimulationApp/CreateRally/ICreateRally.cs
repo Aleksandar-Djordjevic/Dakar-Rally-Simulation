@@ -1,7 +1,9 @@
-﻿namespace DakarRallySimulationApp
+﻿using CSharpFunctionalExtensions;
+
+namespace DakarRallySimulationApp
 {
     public interface ICreateRally
     {
-        void CreateRally(int year);
+        Result CreateRally(int year);
     }
 }
