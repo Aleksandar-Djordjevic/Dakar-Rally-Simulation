@@ -1,7 +1,9 @@
-﻿namespace DakarRallySimulationApp
+﻿using CSharpFunctionalExtensions;
+
+namespace DakarRallySimulationApp
 {
     public interface IRemoveVehicleFromRally
     {
-        void RemoveVehicleFromRally(string rallyId, string vehicleId);
+        Result RemoveVehicleFromRally(string rallyId, string vehicleId);
     }
 }

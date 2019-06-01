@@ -46,7 +46,7 @@ namespace DakarRallySimulationApp
             return _addVehicleToRallyService.AddCrossMotorcycle(rallyId, vehicleId, teamName, model, manufacturingDate);
         }
 
-        public void RemoveVehicleFromRally(string rallyId, string vehicleId)
+        public Result RemoveVehicleFromRally(string rallyId, string vehicleId)
         {
             throw new NotImplementedException();
         }
