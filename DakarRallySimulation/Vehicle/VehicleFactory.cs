@@ -1,6 +1,7 @@
 ﻿using System;
+using DakarRallySimulation.Domain.VehicleHealthStatus;
 
-namespace DakarRallySimulation.Domain
+namespace DakarRallySimulation.Domain.Vehicle
 {
     public class VehicleBuilder : ICreateVehicle
     {
@@ -12,7 +13,7 @@ namespace DakarRallySimulation.Domain
         private readonly TimeSpan _carRepairmentDuration;
         private readonly TimeSpan _truckRepairmentDuration;
         private readonly TimeSpan _motorcycleRepairmentDuration;
-        private readonly ICreateHealtStatusProvider _healtStatusProviderBuilder;
+        private readonly ICreateHealthStatusProvider _healtStatusProviderBuilder;
         private readonly int _simulationResolutionTimeInSeconds;
 
         public VehicleBuilder(
@@ -24,7 +25,7 @@ namespace DakarRallySimulation.Domain
             TimeSpan carRepairmentDuration,
             TimeSpan truckRepairmentDuration,
             TimeSpan motorcycleRepairmentDuration,
-            ICreateHealtStatusProvider healtStatusProviderBuilder,
+            ICreateHealthStatusProvider healtStatusProviderBuilder,
             int simulationResolutionTimeInSeconds)
         {
             _sportCarMaxSpeed = sportCarMaxSpeed;
@@ -42,6 +43,7 @@ namespace DakarRallySimulation.Domain
         public IAmVehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
+                VehicleType.Car, 
                 id, 
                 teamName, 
                 model, 
@@ -55,6 +57,7 @@ namespace DakarRallySimulation.Domain
         public IAmVehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
+                VehicleType.Car,
                 id,
                 teamName,
                 model,
@@ -68,6 +71,7 @@ namespace DakarRallySimulation.Domain
         public IAmVehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
+                VehicleType.Truck,
                 id,
                 teamName,
                 model,
@@ -81,6 +85,7 @@ namespace DakarRallySimulation.Domain
         public IAmVehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
+                VehicleType.Motorcycle,
                 id,
                 teamName,
                 model,
@@ -94,6 +99,7 @@ namespace DakarRallySimulation.Domain
         public IAmVehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
         {
             return new Vehicle(
+                VehicleType.Motorcycle,
                 id,
                 teamName,
                 model,

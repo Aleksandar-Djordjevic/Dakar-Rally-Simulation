@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSharpFunctionalExtensions;
+using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.Domain
 {
@@ -13,6 +14,11 @@ namespace DakarRallySimulation.Domain
 
         public string Id { get; }
         public int Year { get; }
+
+        public RallyStatus GetStatus()
+        {
+            return _state.Status;
+        }
         public int Distance { get; }
         public bool IsFinished { get; private set; }
         public Dictionary<string, IAmVehicle> Vehicles { get; } = new Dictionary<string, IAmVehicle>();
@@ -55,6 +61,7 @@ namespace DakarRallySimulation.Domain
 
         private abstract class RallyState
         {
+            public abstract RallyStatus Status { get; }
             protected readonly Rally Rally;
 
             public RallyState(Rally rally)
@@ -72,6 +79,8 @@ namespace DakarRallySimulation.Domain
         private class RallyPending : RallyState
         {
             public RallyPending(Rally rally) : base (rally) { }
+
+            public override RallyStatus Status { get {return RallyStatus.Pending; }}
 
             public override Result AddVehicle(IAmVehicle vehicle)
             {
@@ -120,6 +129,8 @@ namespace DakarRallySimulation.Domain
         {
             public RallyRunning(Rally rally) : base (rally) { }
 
+            public override RallyStatus Status { get {return RallyStatus.Running; }}
+
             public override Result AddVehicle(IAmVehicle vehicle)
             {
                 return Result.Fail("Rally has already started. Vehicle cannot be added.");
@@ -151,6 +162,8 @@ namespace DakarRallySimulation.Domain
             {
                 rally.IsFinished = true;
             }
+
+            public override RallyStatus Status { get {return RallyStatus.Finished; }}
 
             public override Result AddVehicle(IAmVehicle vehicle)
             {

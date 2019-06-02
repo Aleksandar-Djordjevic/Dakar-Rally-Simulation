@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.App.GetVehicleStatistics
 {

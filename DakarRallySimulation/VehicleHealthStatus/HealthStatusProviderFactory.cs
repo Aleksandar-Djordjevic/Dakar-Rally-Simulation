@@ -1,6 +1,6 @@
-﻿namespace DakarRallySimulation.Domain
+﻿namespace DakarRallySimulation.Domain.VehicleHealthStatus
 {
-    public class HealtStatusProviderFactory : ICreateHealtStatusProvider
+    public class HealthStatusProviderFactory : ICreateHealthStatusProvider
     {
         private readonly int _sportCarLightMalfunctionHourlyLikelihood;
         private readonly int _sportCarHeavyMalfunctionHourlyLikelihood;
@@ -14,7 +14,7 @@
         private readonly int _crossMotorcycleHeavyMalfunctionHourlyLikelihood;
         private readonly int _simulationResolutionTimeInSeconds;
 
-        public HealtStatusProviderFactory(
+        public HealthStatusProviderFactory(
             int sportCarLightMalfunctionHourlyLikelihood,
             int sportCarHeavyMalfunctionHourlyLikelihood,
             int terrainCarLightMalfunctionHourlyLikelihood,
@@ -40,41 +40,41 @@
             _simulationResolutionTimeInSeconds = simulationResolutionTimeInSeconds;
         }
 
-        public IProvideHealtStatus BuildForSportCar()
+        public IProvideHealthStatus BuildForSportCar()
         {
-            return new HealtStatusProvider(
+            return new HealthStatusProvider(
                 _sportCarLightMalfunctionHourlyLikelihood,
                 _sportCarHeavyMalfunctionHourlyLikelihood,
                 _simulationResolutionTimeInSeconds);
         }
 
-        public IProvideHealtStatus BuildForTerrainCar()
+        public IProvideHealthStatus BuildForTerrainCar()
         {
-            return new HealtStatusProvider(
+            return new HealthStatusProvider(
                 _terrainCarLightMalfunctionHourlyLikelihood,
                 _terrainCarHeavyMalfunctionHourlyLikelihood,
                 _simulationResolutionTimeInSeconds);
         }
 
-        public IProvideHealtStatus BuildForTruck()
+        public IProvideHealthStatus BuildForTruck()
         {
-            return new HealtStatusProvider(
+            return new HealthStatusProvider(
                 _truckLightMalfunctionHourlyLikelihood,
                 _truckHeavyMalfunctionHourlyLikelihood,
                 _simulationResolutionTimeInSeconds);
         }
 
-        public IProvideHealtStatus BuildForSportMotorcycle()
+        public IProvideHealthStatus BuildForSportMotorcycle()
         {
-            return new HealtStatusProvider(
+            return new HealthStatusProvider(
                 _sportMotorcycleLightMalfunctionHourlyLikelihood,
                 _sportMotorcycleHeavyMalfunctionHourlyLikelihood,
                 _simulationResolutionTimeInSeconds);
         }
 
-        public IProvideHealtStatus BuildForCrossMotorcycle()
+        public IProvideHealthStatus BuildForCrossMotorcycle()
         {
-            return new HealtStatusProvider(
+            return new HealthStatusProvider(
                 _crossMotorcycleLightMalfunctionHourlyLikelihood,
                 _crossMotorcycleHeavyMalfunctionHourlyLikelihood,
                 _simulationResolutionTimeInSeconds);

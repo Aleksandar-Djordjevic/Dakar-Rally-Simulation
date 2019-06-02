@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DakarRallySimulation.Domain.VehicleHealthStatus;
 
-namespace DakarRallySimulation.Domain
+namespace DakarRallySimulation.Domain.Vehicle
 {
     public class Vehicle : IAmVehicle
     {
@@ -10,6 +11,7 @@ namespace DakarRallySimulation.Domain
         public event EventHandler Moved; 
 
         public string Id { get; }
+        public VehicleType Type { get; }
         public string TeamName { get; }
         public string Model { get; }
         public DateTime ManufacturingDate { get; }
@@ -18,16 +20,17 @@ namespace DakarRallySimulation.Domain
 
         private readonly int _maxSpeed;
         private readonly TimeSpan _repairmentDuration;
-        private readonly IProvideHealtStatus _healtStatusProvider;
+        private readonly IProvideHealthStatus _healtStatusProvider;
         private readonly int _simulationResolutionTimeInSeconds;
 
         public decimal Distance { get; private set; }
         public DateTime? FinishedAt { get; private set; }
-        public VehicleState State { get; private set; }
+        public VehicleStatus Status { get; private set; }
 
-        public Vehicle(string id, string teamName, string model, DateTime manufacturingDate, int maxSpeed,
-            TimeSpan repairmentDuration, int simulationResolutionTimeInSeconds, IProvideHealtStatus healtStatusProvider)
+        public Vehicle(VehicleType type, string id, string teamName, string model, DateTime manufacturingDate, int maxSpeed,
+            TimeSpan repairmentDuration, int simulationResolutionTimeInSeconds, IProvideHealthStatus healtStatusProvider)
         {
+            Type = type;
             Id = id;
             TeamName = teamName;
             Model = model;
@@ -37,12 +40,12 @@ namespace DakarRallySimulation.Domain
             _simulationResolutionTimeInSeconds = simulationResolutionTimeInSeconds;
             _healtStatusProvider = healtStatusProvider;
             Distance = 0;
-            State = VehicleState.WaitingStart;
+            Status = VehicleStatus.WaitingStart;
         }
 
         public void StartRally(Rally rally)
         {
-            if (State != VehicleState.WaitingStart)
+            if (Status != VehicleStatus.WaitingStart)
             {
                 throw new InvalidOperationException("Vehicle has already started rally.");
             }
@@ -54,7 +57,7 @@ namespace DakarRallySimulation.Domain
         {
             return new VehicleStatistics
             {
-                Status = State,
+                Status = Status,
                 DistanceFromStart = Distance,
                 Malfunctions = MalfunctionHistory,
                 FinishTime = FinishedAt
@@ -63,9 +66,9 @@ namespace DakarRallySimulation.Domain
 
         private async Task GoGo(Rally rally)
         {
-            State = VehicleState.Running;
+            Status = VehicleStatus.Running;
 
-            while (State != VehicleState.Broken)
+            while (Status != VehicleStatus.Broken)
             {
                 await Task.Delay(TimeSpan.FromSeconds(_simulationResolutionTimeInSeconds));
                 Distance += (decimal)(_maxSpeed * _simulationResolutionTimeInSeconds) / 3600;
@@ -73,22 +76,22 @@ namespace DakarRallySimulation.Domain
 
                 if (Distance >= rally.Distance)
                 {
-                    State = VehicleState.Finished;
+                    Status = VehicleStatus.Finished;
                     FinishedAt = DateTime.UtcNow;
                     break;
                 }
 
                 switch (_healtStatusProvider.GetHealtStatus())
                 {
-                    case HealtStatus.HeavyMalfunction:
+                    case HealthStatus.HeavyMalfunction:
                         MalfunctionHistory.Add(Malfunction.CreateHeavy());
-                        State = VehicleState.Broken;
+                        Status = VehicleStatus.Broken;
                         break;
-                    case HealtStatus.LightMalfunction:
+                    case HealthStatus.LightMalfunction:
                         MalfunctionHistory.Add(Malfunction.CreateLight());
                         await Repair();
                         break;
-                    case HealtStatus.WorkingProperly:
+                    case HealthStatus.WorkingProperly:
                     default:
                         break;
                 }
@@ -99,9 +102,9 @@ namespace DakarRallySimulation.Domain
 
         private async Task Repair()
         {
-            State = VehicleState.Repairing;
+            Status = VehicleStatus.Repairing;
             await Task.Delay(_repairmentDuration);
-            State = VehicleState.Running;
+            Status = VehicleStatus.Running;
         }
 
         protected virtual void OnVehicleFinishedRally()
@@ -128,14 +131,5 @@ namespace DakarRallySimulation.Domain
 
             return FinishedAt != null ? -1 : 1;
         }
-    }
-
-    public enum VehicleState
-    {
-        WaitingStart,
-        Running,
-        Repairing,
-        Broken,
-        Finished
     }
 }

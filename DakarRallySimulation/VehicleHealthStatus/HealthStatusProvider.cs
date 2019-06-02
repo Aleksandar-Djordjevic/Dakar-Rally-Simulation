@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace DakarRallySimulation.Domain
+namespace DakarRallySimulation.Domain.VehicleHealthStatus
 {
-    public class HealtStatusProvider : IProvideHealtStatus
+    public class HealthStatusProvider : IProvideHealthStatus
     {
         private readonly int _lightMalfunctionHourlyLikelihood;
         private readonly int _heavyMalfunctionHourlyLikelihood;
         private readonly int _simulationResolutionTimeInSeconds;
         private readonly Random _random;
 
-        public HealtStatusProvider(int lightMalfunctionHourlyLikelihood, int heavyMalfunctionHourlyLikelihood, int simulationResolutionTimeInSeconds)
+        public HealthStatusProvider(int lightMalfunctionHourlyLikelihood, int heavyMalfunctionHourlyLikelihood, int simulationResolutionTimeInSeconds)
         {
             _lightMalfunctionHourlyLikelihood = lightMalfunctionHourlyLikelihood;
             _heavyMalfunctionHourlyLikelihood = heavyMalfunctionHourlyLikelihood;
@@ -17,19 +17,19 @@ namespace DakarRallySimulation.Domain
             _random = new Random();
         }
 
-        public HealtStatus GetHealtStatus()
+        public HealthStatus GetHealtStatus()
         {
             var randomNumber = _random.Next(1, 100 * 3600 / _simulationResolutionTimeInSeconds);
             if (randomNumber <= _heavyMalfunctionHourlyLikelihood)
             {
-                return HealtStatus.HeavyMalfunction;
+                return HealthStatus.HeavyMalfunction;
             }
             if (randomNumber <= _lightMalfunctionHourlyLikelihood)
             {
-                return HealtStatus.LightMalfunction;
+                return HealthStatus.LightMalfunction;
             }
 
-            return HealtStatus.WorkingProperly;
+            return HealthStatus.WorkingProperly;
         } 
     }
 }

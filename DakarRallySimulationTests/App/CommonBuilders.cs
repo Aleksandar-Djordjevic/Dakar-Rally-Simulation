@@ -2,6 +2,7 @@
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.App;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 using Moq;
 
 namespace DakarRallySimulation.Tests.App

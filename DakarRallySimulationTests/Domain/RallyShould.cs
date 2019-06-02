@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 using Xunit;
 
 namespace DakarRallySimulation.Tests.Domain
@@ -118,7 +119,9 @@ namespace DakarRallySimulation.Tests.Domain
             public event EventHandler FinishedRally;
             public event EventHandler Moved;
             public string Id { get; }
+            public VehicleType Type { get; }
             public decimal Distance { get; }
+            public VehicleStatus Status { get; }
             public DateTime? FinishedAt { get; }
             public List<Malfunction> MalfunctionHistory { get; }
 

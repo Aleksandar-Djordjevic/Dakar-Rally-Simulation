@@ -4,6 +4,6 @@ namespace DakarRallySimulation.App.GetRallyStatus
 {
     public interface IProvideRallyStatusInfo
     {
-        Result<RallyStatusInfo> GetRallyStatus(string rallyId);
+        Result<RallyStatusInfo> GetRallyStatusInfo(string rallyId);
     }
 }

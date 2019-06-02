@@ -1,17 +1,18 @@
 ﻿using CSharpFunctionalExtensions;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.App.GetVehicleStatistics
 {
     public class VehicleStatisticsService : IProvideVehicleStatistics
     {
         private readonly IAmRallyRepository _rellyRepo;
-        private readonly ICreateVehicleStatistics _vehicleStatistics;
+        private readonly ICreateVehicleStatistics _vehicleStatisticsFactory;
 
-        public VehicleStatisticsService(IAmRallyRepository rellyRepo, ICreateVehicleStatistics vehicleStatistics)
+        public VehicleStatisticsService(IAmRallyRepository rellyRepo, ICreateVehicleStatistics vehicleStatisticsFactory)
         {
             _rellyRepo = rellyRepo;
-            _vehicleStatistics = vehicleStatistics;
+            _vehicleStatisticsFactory = vehicleStatisticsFactory;
         }
 
         public Result<VehicleStatistics> GetVehicleStatistics(string rallyId, string vehicleId)
@@ -25,7 +26,7 @@ namespace DakarRallySimulation.App.GetVehicleStatistics
 
         private VehicleStatistics GetStatistics(IAmVehicle vehicle)
         {
-            return _vehicleStatistics.Create(vehicle);
+            return _vehicleStatisticsFactory.Create(vehicle);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace DakarRallySimulation.Domain
+﻿namespace DakarRallySimulation.Domain.VehicleHealthStatus
 {
-    public enum HealtStatus
+    public enum HealthStatus
     {
         HeavyMalfunction,
         LightMalfunction,

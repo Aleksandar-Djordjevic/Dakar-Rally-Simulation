@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 using Xunit;
 
 namespace DakarRallySimulation.Tests.Domain
@@ -29,7 +30,7 @@ namespace DakarRallySimulation.Tests.Domain
             await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
-            Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
+            Assert.Equal(VehicleStatus.Finished, vehicleStatistics.Status);
             Assert.NotNull(vehicleStatistics.FinishTime);
             Assert.True(rally.Distance <= vehicleStatistics.DistanceFromStart);
         }
@@ -44,7 +45,7 @@ namespace DakarRallySimulation.Tests.Domain
             await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
-            Assert.Equal(VehicleState.Finished, vehicleStatistics.Status);
+            Assert.Equal(VehicleStatus.Finished, vehicleStatistics.Status);
             Assert.NotNull(vehicleStatistics.FinishTime);
             Assert.True(rally.Distance <= vehicleStatistics.DistanceFromStart);
         }
@@ -59,7 +60,7 @@ namespace DakarRallySimulation.Tests.Domain
             await Task.Delay(TimeSpan.FromSeconds(30));
             var vehicleStatistics = vehicle.GetStatistics();
 
-            Assert.Equal(VehicleState.Broken, vehicleStatistics.Status);
+            Assert.Equal(VehicleStatus.Broken, vehicleStatistics.Status);
             Assert.Null(vehicleStatistics.FinishTime);
             Assert.True(rally.Distance > vehicleStatistics.DistanceFromStart);
         }
@@ -87,7 +88,7 @@ namespace DakarRallySimulation.Tests.Domain
             await Task.Delay(TimeSpan.FromSeconds(5));
             var vehicleStatistics = vehicle.GetStatistics();
             
-            Assert.Equal(VehicleState.Repairing, vehicleStatistics.Status);
+            Assert.Equal(VehicleStatus.Repairing, vehicleStatistics.Status);
         }
 
         private Rally BuildRally(int distance)

@@ -1,6 +1,7 @@
 ﻿using System;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.App.AddVehicleToRally
 {

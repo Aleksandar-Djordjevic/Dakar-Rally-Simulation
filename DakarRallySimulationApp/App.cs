@@ -74,7 +74,7 @@ namespace DakarRallySimulation.App
             throw new NotImplementedException();
         }
 
-        public void GetLeaderboard(VehicleType type)
+        public void GetLeaderboard(GetLeaderboard.VehicleType type)
         {
             throw new NotImplementedException();
         }
@@ -84,14 +84,14 @@ namespace DakarRallySimulation.App
             return _vehicleStatisticsService.GetVehicleStatistics(rallyId, vehicleId);
         }
 
-        public void FindVehicle(string team, string model, DateTime manufacturingDate, VehicleStatus status)
+        public void FindVehicle(string team, string model, DateTime manufacturingDate, GetVehicleStatistics.VehicleStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public Result<RallyStatusInfo> GetRallyStatus(string rallyId)
+        public Result<RallyStatusInfo> GetRallyStatusInfo(string rallyId)
         {
-            return _getRallyStatusInfoService.GetRallyStatus(rallyId);
+            return _getRallyStatusInfoService.GetRallyStatusInfo(rallyId);
         }
     }
 }

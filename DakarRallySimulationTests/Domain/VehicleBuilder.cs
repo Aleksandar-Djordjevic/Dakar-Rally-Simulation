@@ -1,5 +1,7 @@
 ﻿using System;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
+using DakarRallySimulation.Domain.VehicleHealthStatus;
 using Moq;
 
 namespace DakarRallySimulation.Tests.Domain
@@ -8,59 +10,59 @@ namespace DakarRallySimulation.Tests.Domain
     {
         public Vehicle BuildProperlyWorkingVehicle()
         {
-            var healtStatusProviderMock = new Mock<IProvideHealtStatus>();
+            var healtStatusProviderMock = new Mock<IProvideHealthStatus>();
             healtStatusProviderMock
                 .Setup(provider => provider.GetHealtStatus())
-                .Returns(HealtStatus.WorkingProperly);
+                .Returns(HealthStatus.WorkingProperly);
 
             return new Vehicle(
-                "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
+                VehicleType.Car, "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
         }
 
         public Vehicle BuildLightlyMalfunctioningVehicle()
         {
             var healtStatusNumber = 0;
-            var healtStatusProviderMock = new Mock<IProvideHealtStatus>();
+            var healtStatusProviderMock = new Mock<IProvideHealthStatus>();
             healtStatusProviderMock
                 .Setup(provider => provider.GetHealtStatus())
-                .Returns(() => healtStatusNumber++ % 2 == 0 ? HealtStatus.LightMalfunction : HealtStatus.WorkingProperly);
+                .Returns(() => healtStatusNumber++ % 2 == 0 ? HealthStatus.LightMalfunction : HealthStatus.WorkingProperly);
 
             return new Vehicle(
-                "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
+                VehicleType.Car, "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
         }
 
         public Vehicle BuildHeavilyMalfunctioningVehicle()
         {
-            var healtStatusProviderMock = new Mock<IProvideHealtStatus>();
+            var healtStatusProviderMock = new Mock<IProvideHealthStatus>();
             healtStatusProviderMock
                 .Setup(provider => provider.GetHealtStatus())
-                .Returns(HealtStatus.HeavyMalfunction);
+                .Returns(HealthStatus.HeavyMalfunction);
 
             return new Vehicle(
-                "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
+                VehicleType.Car, "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
         }
 
         public Vehicle BuildVehicleWhichLightlyMalfunctionsInBeginning()
         {
             var healtStatusNumber = 0;
-            var healtStatusProviderMock = new Mock<IProvideHealtStatus>();
+            var healtStatusProviderMock = new Mock<IProvideHealthStatus>();
             healtStatusProviderMock
                 .Setup(provider => provider.GetHealtStatus())
-                .Returns(() => healtStatusNumber++ < 2 ? HealtStatus.LightMalfunction : HealtStatus.WorkingProperly);
+                .Returns(() => healtStatusNumber++ < 2 ? HealthStatus.LightMalfunction : HealthStatus.WorkingProperly);
 
             return new Vehicle(
-                "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
+                VehicleType.Car, "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(3), 2, healtStatusProviderMock.Object);
         }
 
         public Vehicle BuildLightlyMalfunctioningVehicleWithLongRapairmentDuration()
         {
-            var healtStatusProviderMock = new Mock<IProvideHealtStatus>();
+            var healtStatusProviderMock = new Mock<IProvideHealthStatus>();
             healtStatusProviderMock
                 .Setup(provider => provider.GetHealtStatus())
-                .Returns(HealtStatus.LightMalfunction);
+                .Returns(HealthStatus.LightMalfunction);
 
             return new Vehicle(
-                "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(60), 1, healtStatusProviderMock.Object);
+                VehicleType.Car, "ID 1", "BMW Racing", "BMW 3M", DateTime.UtcNow, 600, TimeSpan.FromSeconds(60), 1, healtStatusProviderMock.Object);
         }
     }
 }

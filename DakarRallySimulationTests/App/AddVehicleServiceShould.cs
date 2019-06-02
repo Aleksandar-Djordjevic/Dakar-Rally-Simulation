@@ -1,6 +1,7 @@
 ﻿using System;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.Domain;
+using DakarRallySimulation.Domain.Vehicle;
 using Xunit;
 using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
 
