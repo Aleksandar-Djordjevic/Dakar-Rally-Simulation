@@ -19,7 +19,7 @@ namespace DakarRallySimulation.Tests.App
             var vehicleId = "vehicle1";
             var service = new VehicleStatisticsService(
                 CommonBuilders.SetUpRepoWithNoRally(rallyId).Object,
-                new FakeVehicleStatisticsFactory(ExpectedStats));
+                new FakeVehicleStatisticsFactory(GetExpectedStats()));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
@@ -35,7 +35,7 @@ namespace DakarRallySimulation.Tests.App
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
                 CommonBuilders.GetRallyThatDoesNotHaveVehicle(vehicleId));
-            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(ExpectedStats));
+            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(GetExpectedStats()));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
@@ -49,22 +49,26 @@ namespace DakarRallySimulation.Tests.App
             var rallyId = "2019";
             var vehicleId = "vehicle1";
             var fakeVehicle = new FakeVehicle(vehicleId);
+            var expectedStats = GetExpectedStats();
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
                 CommonBuilders.GetRallyThatHasVehicle(vehicleId, fakeVehicle));
-            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(ExpectedStats));
+            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(expectedStats));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(ExpectedStats, result.Value);
+            Assert.Equal(expectedStats, result.Value);
         }
 
-        private VehicleStatistics ExpectedStats => new VehicleStatistics
+        private VehicleStatistics GetExpectedStats()
         {
-            DistanceFromStart = 5,
-            MalfunctionStatistics = new List<Malfunction>()
-        };
+            return new VehicleStatistics
+            {
+                DistanceFromStart = 5,
+                MalfunctionStatistics = new List<Malfunction>()
+            };
+        }
 
         private class FakeVehicleStatisticsFactory : ICreateVehicleStatistics
         {
