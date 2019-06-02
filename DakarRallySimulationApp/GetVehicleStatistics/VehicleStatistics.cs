@@ -11,9 +11,23 @@ namespace DakarRallySimulation.App.GetVehicleStatistics
         public DateTime? FinishTime { get; set; }
     }
 
+    public enum VehicleStatus
+    {
+        Running,
+        Repairing,
+        Broken,
+        FinishedRally
+    }
+
     public class Malfunction
     {
         public DateTime OccuredOn { get; set; }
-        public string Severity { get; set; }
+        public DamageLevel Damage { get; set; }
+    }
+
+    public enum DamageLevel
+    {
+        Heavy,
+        Light
     }
 }

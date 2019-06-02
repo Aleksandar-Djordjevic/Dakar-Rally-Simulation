@@ -4,12 +4,13 @@ namespace DakarRallySimulation.Domain
 {
     public class Malfunction
     {
-        private DateTime _occuredOn;
-        private bool _isHeavy;
+        public DateTime OccuredOn { get; }
+        public bool IsHeavy { get; }
 
         private Malfunction(bool isHeavy)
         {
-            this._occuredOn = DateTime.UtcNow;
+            this.OccuredOn = DateTime.UtcNow;
+            IsHeavy = isHeavy;
         }
 
         public static Malfunction CreateHeavy() {

@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.App.CreateRally;
 using DakarRallySimulation.App.GetLeaderboard;
+using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using DakarRallySimulation.App.RemoveVehicleFromRally;
 using DakarRallySimulation.App.StartRally;
@@ -16,13 +17,16 @@ namespace DakarRallySimulation.App
         private readonly IRemoveVehicleFromRally _removeVehicleFromRallyService;
         private readonly IStartRally _startRallyService;
         private readonly IProvideVehicleStatistics _vehicleStatisticsService;
+        private readonly IProvideRallyStatusInfo _getRallyStatusInfoService;
 
-        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService)
+        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService)
         {
             _createRallyService = createRallyService;
             _addVehicleToRallyService = addVehicleToRallyService;
             _removeVehicleFromRallyService = removeVehicleFromRallyService;
             _startRallyService = startRallyService;
+            _vehicleStatisticsService = vehicleStatisticsService;
+            _getRallyStatusInfoService = getRallyStatusInfoService;
         }
 
         public Result CreateRally(int year)
@@ -85,9 +89,9 @@ namespace DakarRallySimulation.App
             throw new NotImplementedException();
         }
 
-        public void GetRallyStatus(string rallyId)
+        public Result<RallyStatusInfo> GetRallyStatus(string rallyId)
         {
-            throw new NotImplementedException();
+            return _getRallyStatusInfoService.GetRallyStatus(rallyId);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DakarRallySimulation.Domain
 {
@@ -9,6 +10,7 @@ namespace DakarRallySimulation.Domain
         string Id { get; }
         decimal Distance { get; }
         DateTime? FinishedAt { get; }
+        List<Malfunction> MalfunctionHistory { get; }
         void StartRally(Rally rally);
     }
 }

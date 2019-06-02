@@ -17,7 +17,7 @@ namespace DakarRallySimulation.App
         IProvideLeaderboard,
         IProvideVehicleStatistics,
         IFindVehicle,
-        IProvideRallyStatus
+        IProvideRallyStatusInfo
     {
     }
 }

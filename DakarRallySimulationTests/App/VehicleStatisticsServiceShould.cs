@@ -1,6 +1,12 @@
-﻿using DakarRallySimulation.App;
+﻿using System;
+using System.Collections.Generic;
 using DakarRallySimulation.App.GetVehicleStatistics;
+using DakarRallySimulation.Domain;
+using Moq;
 using Xunit;
+using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
+using Malfunction = DakarRallySimulation.App.GetVehicleStatistics.Malfunction;
+using VehicleStatistics = DakarRallySimulation.App.GetVehicleStatistics.VehicleStatistics;
 
 namespace DakarRallySimulation.Tests.App
 {
@@ -11,7 +17,9 @@ namespace DakarRallySimulation.Tests.App
         {
             var rallyId = "2019";
             var vehicleId = "vehicle1";
-            var service = new VehicleStatisticsService(CommonBuilders.SetUpRepoWithNoRally(rallyId).Object);
+            var service = new VehicleStatisticsService(
+                CommonBuilders.SetUpRepoWithNoRally(rallyId).Object,
+                new FakeVehicleStatisticsFactory(ExpectedStats));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
@@ -27,7 +35,7 @@ namespace DakarRallySimulation.Tests.App
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
                 CommonBuilders.GetRallyThatDoesNotHaveVehicle(vehicleId));
-            var service = new VehicleStatisticsService(rallyRepo);
+            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(ExpectedStats));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
@@ -40,14 +48,36 @@ namespace DakarRallySimulation.Tests.App
         {
             var rallyId = "2019";
             var vehicleId = "vehicle1";
+            var fakeVehicle = new FakeVehicle(vehicleId);
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
                 rallyId,
-                CommonBuilders.GetRallyThatHasVehicle(vehicleId, new FakeVehicle(vehicleId)));
-            var service = new VehicleStatisticsService(rallyRepo);
+                CommonBuilders.GetRallyThatHasVehicle(vehicleId, fakeVehicle));
+            var service = new VehicleStatisticsService(rallyRepo, new FakeVehicleStatisticsFactory(ExpectedStats));
 
             var result = service.GetVehicleStatistics(rallyId, vehicleId);
 
             Assert.True(result.IsSuccess);
+            Assert.Equal(ExpectedStats, result.Value);
+        }
+
+        private VehicleStatistics ExpectedStats => new VehicleStatistics
+        {
+            DistanceFromStart = 5,
+            MalfunctionStatistics = new List<Malfunction>()
+        };
+
+        private class FakeVehicleStatisticsFactory : ICreateVehicleStatistics
+        {
+            private readonly VehicleStatistics _stats;
+            public FakeVehicleStatisticsFactory(VehicleStatistics stats)
+            {
+                _stats = stats;
+            }
+
+            public VehicleStatistics Create(IAmVehicle vehicle)
+            {
+                return _stats;
+            }
         }
     }
 }

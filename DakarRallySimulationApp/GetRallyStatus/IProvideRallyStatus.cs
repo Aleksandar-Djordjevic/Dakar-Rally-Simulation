@@ -1,7 +1,9 @@
-﻿namespace DakarRallySimulation.App.GetRallyStatus
+﻿using CSharpFunctionalExtensions;
+
+namespace DakarRallySimulation.App.GetRallyStatus
 {
-    public interface IProvideRallyStatus
+    public interface IProvideRallyStatusInfo
     {
-        void GetRallyStatus(string rallyId);
+        Result<RallyStatusInfo> GetRallyStatus(string rallyId);
     }
 }

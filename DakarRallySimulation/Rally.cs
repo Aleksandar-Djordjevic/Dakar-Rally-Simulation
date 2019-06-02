@@ -108,21 +108,6 @@ namespace DakarRallySimulation.Domain
                             vehicle.StartRally(Rally);
                         }
                     });
-
-                //if (Rally.Vehicles.Any())
-                //{
-                //    Rally._state = new RallyRunning(Rally);
-                //    Rally.OnStarted();
-                //    foreach (var vehicle in Rally.Vehicles.Values)
-                //    {
-                //        vehicle.StartRally(Rally);
-                //    }
-                //}
-                //else
-                //{
-                //    Rally._state = new RallyFinished(Rally);
-                //}
-                //return Result.Ok();
             }
 
             public override void VehicleFinishedRally(string vehicleId)

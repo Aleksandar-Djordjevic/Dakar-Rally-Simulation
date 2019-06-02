@@ -14,7 +14,7 @@ namespace DakarRallySimulation.Domain
         public string Model { get; }
         public DateTime ManufacturingDate { get; }
 
-        private readonly List<Malfunction> _malfunctionHistory = new List<Malfunction>();
+        public List<Malfunction> MalfunctionHistory { get; } = new List<Malfunction>();
 
         private readonly int _maxSpeed;
         private readonly TimeSpan _repairmentDuration;
@@ -56,7 +56,7 @@ namespace DakarRallySimulation.Domain
             {
                 Status = State,
                 DistanceFromStart = Distance,
-                Malfunctions = _malfunctionHistory,
+                Malfunctions = MalfunctionHistory,
                 FinishTime = FinishedAt
             };
         }
@@ -81,11 +81,11 @@ namespace DakarRallySimulation.Domain
                 switch (_healtStatusProvider.GetHealtStatus())
                 {
                     case HealtStatus.HeavyMalfunction:
-                        _malfunctionHistory.Add(Malfunction.CreateHeavy());
+                        MalfunctionHistory.Add(Malfunction.CreateHeavy());
                         State = VehicleState.Broken;
                         break;
                     case HealtStatus.LightMalfunction:
-                        _malfunctionHistory.Add(Malfunction.CreateLight());
+                        MalfunctionHistory.Add(Malfunction.CreateLight());
                         await Repair();
                         break;
                     case HealtStatus.WorkingProperly:

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DakarRallySimulation.Domain;
 using Xunit;
 
@@ -119,6 +120,7 @@ namespace DakarRallySimulation.Tests.Domain
             public string Id { get; }
             public decimal Distance { get; }
             public DateTime? FinishedAt { get; }
+            public List<Malfunction> MalfunctionHistory { get; }
 
             public VehicleStub(string id)
             {

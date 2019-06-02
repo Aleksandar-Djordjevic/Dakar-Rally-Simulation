@@ -6,10 +6,12 @@ namespace DakarRallySimulation.App.GetVehicleStatistics
     public class VehicleStatisticsService : IProvideVehicleStatistics
     {
         private readonly IAmRallyRepository _rellyRepo;
+        private readonly ICreateVehicleStatistics _vehicleStatistics;
 
-        public VehicleStatisticsService(IAmRallyRepository rellyRepo)
+        public VehicleStatisticsService(IAmRallyRepository rellyRepo, ICreateVehicleStatistics vehicleStatistics)
         {
             _rellyRepo = rellyRepo;
+            _vehicleStatistics = vehicleStatistics;
         }
 
         public Result<VehicleStatistics> GetVehicleStatistics(string rallyId, string vehicleId)
@@ -23,7 +25,7 @@ namespace DakarRallySimulation.App.GetVehicleStatistics
 
         private VehicleStatistics GetStatistics(IAmVehicle vehicle)
         {
-            return new VehicleStatistics();
+            return _vehicleStatistics.Create(vehicle);
         }
     }
 }
