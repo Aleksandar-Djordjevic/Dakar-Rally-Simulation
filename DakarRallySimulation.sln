@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "DakarRallySimulati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "DakarRallySimulationApp\App.csproj", "{265E68B3-6AD9-42CA-BD8A-452D2FF9FBD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{DDF1852E-FBFB-4990-B11E-C4F64856B5CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{265E68B3-6AD9-42CA-BD8A-452D2FF9FBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{265E68B3-6AD9-42CA-BD8A-452D2FF9FBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{265E68B3-6AD9-42CA-BD8A-452D2FF9FBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF1852E-FBFB-4990-B11E-C4F64856B5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF1852E-FBFB-4990-B11E-C4F64856B5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF1852E-FBFB-4990-B11E-C4F64856B5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF1852E-FBFB-4990-B11E-C4F64856B5CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

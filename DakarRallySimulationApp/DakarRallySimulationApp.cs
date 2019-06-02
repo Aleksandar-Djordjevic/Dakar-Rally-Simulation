@@ -10,7 +10,7 @@ using DakarRallySimulation.App.StartRally;
 
 namespace DakarRallySimulation.App
 {
-    public class App : ISimulateDakarRally
+    public class DakarRallySimulationApp : ISimulateDakarRally
     {
         private readonly ICreateRally _createRallyService;
         private readonly IAddVehicleToRally _addVehicleToRallyService;
@@ -19,7 +19,7 @@ namespace DakarRallySimulation.App
         private readonly IProvideVehicleStatistics _vehicleStatisticsService;
         private readonly IProvideRallyStatusInfo _getRallyStatusInfoService;
 
-        public App(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService)
+        public DakarRallySimulationApp(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService)
         {
             _createRallyService = createRallyService;
             _addVehicleToRallyService = addVehicleToRallyService;
