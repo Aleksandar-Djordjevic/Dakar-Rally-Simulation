@@ -3,7 +3,7 @@ using DakarRallySimulation.Domain.VehicleHealthStatus;
 
 namespace DakarRallySimulation.Domain.Vehicle
 {
-    public class VehicleBuilder : ICreateVehicle
+    public class VehicleFactory : ICreateVehicle
     {
         private readonly int _sportCarMaxSpeed;
         private readonly int _terrainCarMaxSpeed;
@@ -16,7 +16,7 @@ namespace DakarRallySimulation.Domain.Vehicle
         private readonly ICreateHealthStatusProvider _healtStatusProviderBuilder;
         private readonly int _simulationResolutionTimeInSeconds;
 
-        public VehicleBuilder(
+        public VehicleFactory(
             int sportCarMaxSpeed,
             int terrainCarMaxSpeed,
             int truckMaxSpeed,
