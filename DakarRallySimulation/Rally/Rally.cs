@@ -37,13 +37,12 @@ namespace DakarRallySimulation.Domain
         public Result AddVehicle(IAmVehicle vehicle)
         {
             return Result.Create(_state.AllowedVehicleAdding, "Adding vehicle not allowed.")
-                .OnSuccess(() => Result.Create(_vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded))
+                .OnSuccess(() => Result.Create(!_vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded))
                 .OnSuccess(() =>
                 {
                     _vehicles.Add(vehicle.Id, vehicle);
                     _vehiclesStillInRally.Add(vehicle.Id);
                     vehicle.FinishedRally += WhenVehicleFinishesRally;
-                    vehicle.JoinRally(this);
                 });
         }
 
@@ -56,7 +55,6 @@ namespace DakarRallySimulation.Domain
                     _vehicles.Remove(vehicle.Id);
                     _vehiclesStillInRally.Remove(vehicle.Id);
                     vehicle.FinishedRally -= WhenVehicleFinishesRally;
-                    vehicle.LeaveRally(this);
                 });
         }
 
@@ -109,6 +107,10 @@ namespace DakarRallySimulation.Domain
                     {
                         Rally._state = new RallyRunning(Rally);
                         Rally.OnStarted();
+                        foreach (var vehicle in Rally._vehicles.Values)
+                        {
+                            vehicle.StartRally(Rally);
+                        }
                     });
             }
 
