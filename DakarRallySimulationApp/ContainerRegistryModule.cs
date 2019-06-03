@@ -22,13 +22,13 @@ namespace DakarRallySimulation.App
         public int TruckMaxSpeed { get; set; } = 80;
         public int SportMotorcycleMaxSpeed { get; set; } = 130;
         public int CrossMotorcycleMaxSpeed { get; set; } = 85;
-        public TimeSpan CarRepairmentDuration { get; set; } = TimeSpan.FromHours(5);
+        public TimeSpan CarRepairmentDuration { get; set; } = TimeSpan.FromSeconds(15);
         public TimeSpan TruckRepairmentDuration { get; set; } = TimeSpan.FromHours(7);
         public TimeSpan MotorcycleRepairmentDuration { get; set; } = TimeSpan.FromHours(7);
         public int SimulationResolutionTimeInSeconds { get; set; } = 5;
 
-        public int SportCarLightMalfunctionHourlyLikelihood { get; set; } = 12;
-        public int SportCarHeavyMalfunctionHourlyLikelihood { get; set; } = 2;
+        public int SportCarLightMalfunctionHourlyLikelihood { get; set; } = 35000;
+        public int SportCarHeavyMalfunctionHourlyLikelihood { get; set; } = 17000;
         public int TerrainCarLightMalfunctionHourlyLikelihood { get; set; } = 3;
         public int TerrainCarHeavyMalfunctionHourlyLikelihood { get; set; } = 1;
         public int TruckLightMalfunctionHourlyLikelihood { get; set; } = 6;

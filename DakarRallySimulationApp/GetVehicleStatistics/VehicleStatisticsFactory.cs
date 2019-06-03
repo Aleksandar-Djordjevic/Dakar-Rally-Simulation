@@ -13,6 +13,7 @@ namespace DakarRallySimulation.App.GetVehicleStatistics
         {
             var stat = new VehicleStatistics
             {
+                Status = vehicle.Status.ToDto(),
                 DistanceFromStart = vehicle.Distance,
                 FinishTime = vehicle.FinishedAt,
                 MalfunctionStatistics = GetMalfunctionStatistics(vehicle),
