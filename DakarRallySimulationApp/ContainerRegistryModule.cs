@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Autofac;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.App.CreateRally;
-using DakarRallySimulation.App.FindVehicle;
 using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;

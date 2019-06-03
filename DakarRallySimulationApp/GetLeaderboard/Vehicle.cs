@@ -1,5 +1,4 @@
 ﻿using System;
-using DakarRallySimulation.Domain.Vehicle;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

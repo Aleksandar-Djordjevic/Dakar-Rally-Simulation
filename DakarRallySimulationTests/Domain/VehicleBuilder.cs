@@ -1,5 +1,4 @@
 ﻿using System;
-using DakarRallySimulation.Domain;
 using DakarRallySimulation.Domain.Vehicle;
 using DakarRallySimulation.Domain.VehicleHealthStatus;
 using Moq;

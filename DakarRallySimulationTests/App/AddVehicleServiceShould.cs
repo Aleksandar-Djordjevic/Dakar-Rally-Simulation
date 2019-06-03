@@ -1,6 +1,5 @@
 ﻿using System;
 using DakarRallySimulation.App.AddVehicleToRally;
-using DakarRallySimulation.Domain;
 using DakarRallySimulation.Domain.Vehicle;
 using Moq;
 using Xunit;

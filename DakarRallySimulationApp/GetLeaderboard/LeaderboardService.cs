@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using CSharpFunctionalExtensions;
 
 using DakarRallySimulation.Domain;

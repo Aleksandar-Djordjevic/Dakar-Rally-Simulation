@@ -1,5 +1,4 @@
 ﻿using System;
-using DakarRallySimulation.App.GetVehicleStatistics;
 
 namespace DakarRallySimulation.App.FindVehicle
 {

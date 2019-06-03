@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using DakarRallySimulation.App;
 using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
 

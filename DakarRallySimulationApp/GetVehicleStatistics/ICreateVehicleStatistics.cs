@@ -1,5 +1,4 @@
-﻿using DakarRallySimulation.Domain;
-using DakarRallySimulation.Domain.Vehicle;
+﻿using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.App.GetVehicleStatistics
 {

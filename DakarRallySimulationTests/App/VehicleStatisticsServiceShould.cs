@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DakarRallySimulation.App.GetVehicleStatistics;
-using DakarRallySimulation.Domain;
 using DakarRallySimulation.Domain.Vehicle;
-using Moq;
 using Xunit;
 using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
 using Malfunction = DakarRallySimulation.App.GetVehicleStatistics.Malfunction;

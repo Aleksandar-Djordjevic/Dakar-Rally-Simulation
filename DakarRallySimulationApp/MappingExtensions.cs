@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Text;
 using DakarRallySimulation.App.GetRallyStatus;
 
 namespace DakarRallySimulation.App
