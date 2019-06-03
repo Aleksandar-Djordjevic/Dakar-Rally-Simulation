@@ -12,6 +12,13 @@ namespace DakarRallySimulation.App.GetRallyStatus
         public List<VehicleCountByType> NumberOfVehiclesByType { get; set; }
     }
 
+    public enum RallyStatus
+    {
+        Pending,
+        Running,
+        Finished
+    }
+
     public struct VehicleCountByStatus
     {
         [JsonConverter(typeof(StringEnumConverter))]

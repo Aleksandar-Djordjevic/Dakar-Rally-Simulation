@@ -24,7 +24,7 @@ namespace WebAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new ContainerRegistryModule
+            containerBuilder.RegisterModule(new DakarRallySimulationContainerRegistryModule
             {
 
             });

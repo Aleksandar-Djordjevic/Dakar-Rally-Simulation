@@ -16,12 +16,6 @@ namespace DakarRallySimulation.App.CreateRally
         {
             return Result.Create(!_rallyRepository.Exists(year.ToString()), "Rally for this year already exists.")
                 .OnSuccess(() => _rallyRepository.Add(new Rally(year, 10000)));
-
-            return _rallyRepository.Find(year.ToString())
-                .OnSuccess(rally => Result.Fail("Rally for this year already exists."))
-                .OnFailure(() => _rallyRepository.Add(new Rally(year, 10000)))
-                // on ne vrati rez od add vec ovaj prvisdfds
-                ;
         }
     }
 }

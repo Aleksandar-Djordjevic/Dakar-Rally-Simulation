@@ -11,7 +11,7 @@ using DakarRallySimulation.Domain;
 
 namespace DakarRallySimulation.App
 {
-    public class ContainerRegistryModule : Module
+    public class DakarRallySimulationContainerRegistryModule : Module
     {
         public int SportCarMaxSpeed { get; set; } = 140;
         public int TerrainCarMaxSpeed { get; set; } = 100;
