@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.Domain;
 using DakarRallySimulation.Domain.Vehicle;
@@ -16,29 +17,28 @@ namespace DakarRallySimulation.App.AddVehicleToRally
             _vehicleFactory = vehicleFactory;
         }
 
-        public Result AddSportCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
+        public Result AddVehicle(string rallyId, Vehicle vehicle)
         {
-            return AddVehicle(rallyId, vehicleId, teamName, model, manufacturingDate, _vehicleFactory.CreateSportCar);
-        }
-
-        public Result AddTerrainCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return AddVehicle(rallyId, vehicleId, teamName, model, manufacturingDate, _vehicleFactory.CreateTerrainCar);
-        }
-
-        public Result AddTruck(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return AddVehicle(rallyId, vehicleId, teamName, model, manufacturingDate, _vehicleFactory.CreateTruck);
-        }
-
-        public Result AddSportMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return AddVehicle(rallyId, vehicleId, teamName, model, manufacturingDate, _vehicleFactory.CreateSportMotorcycle);
-        }
-
-        public Result AddCrossMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return AddVehicle(rallyId, vehicleId, teamName, model, manufacturingDate, _vehicleFactory.CreateCrossMotorcycle);
+            switch (vehicle.Type)
+            {
+                case VehicleType.SportCar:
+                    return AddVehicle(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate, 
+                        _vehicleFactory.CreateSportCar);
+                case VehicleType.TerrainCar:
+                    return AddVehicle(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate, 
+                        _vehicleFactory.CreateTerrainCar);
+                case VehicleType.Truck:
+                    return AddVehicle(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate, 
+                        _vehicleFactory.CreateTruck);
+                case VehicleType.SportMotorcycle:
+                    return AddVehicle(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate, 
+                        _vehicleFactory.CreateSportMotorcycle);
+                case VehicleType.CrossMotorcycle:
+                    return AddVehicle(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate, 
+                        _vehicleFactory.CreateCrossMotorcycle);
+                default:
+                    throw new InvalidEnumArgumentException("Vehicle type not supported.");
+            }
         }
 
         private Result AddVehicle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate, Func<string, string, string, DateTime, IAmVehicle> createVehicle)

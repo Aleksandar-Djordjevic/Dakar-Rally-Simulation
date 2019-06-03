@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         [HttpPost("{rallyId}/vehicles/")]
         public ActionResult AddVehicle(string rallyId, [FromBody] Vehicle vehicle)
         {
-            var result = _rallySimulationApp.AddSportCar(rallyId, vehicle.Id, vehicle.TeamName, vehicle.Model, vehicle.ManufacturingDate)
+            var result = _rallySimulationApp.AddVehicle(rallyId, vehicle)
                 .OnSuccess<ActionResult>(() => StatusCode(201))
                 .OnFailureCompensate(func: error => GetActionResult(error));
             return result.Value;

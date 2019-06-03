@@ -2,8 +2,11 @@
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.Domain;
 using DakarRallySimulation.Domain.Vehicle;
+using Moq;
 using Xunit;
 using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
+using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
+using VehicleType = DakarRallySimulation.App.AddVehicleToRally.VehicleType;
 
 namespace DakarRallySimulation.Tests.App
 {
@@ -13,10 +16,15 @@ namespace DakarRallySimulation.Tests.App
         public void FailWhenRallyDoesNotExist()
         {
             var rallyId = "rally1";
-            var vehicleId = "vehicle1";
-            var service = new AddVehicleService(CommonBuilders.SetUpRepoWithNoRally(rallyId).Object, new FakeVehicleBuilder());
+            var vehicle = new Vehicle
+            {
+                Id = "v1",
+                Type = VehicleType.SportCar
+            };
+            var vehicleFactoryMock = GetVehicleFactoryWhichReturns(vehicle.Id);
+            var service = new AddVehicleService(CommonBuilders.SetUpRepoWithNoRally(rallyId).Object, vehicleFactoryMock.Object);
 
-            var result = service.AddSportCar(rallyId, vehicleId, "BMW Racing", "BMW 3M", DateTime.UtcNow);
+            var result = service.AddVehicle(rallyId, vehicle);
 
             Assert.True(result.IsFailure);
             Assert.Equal(ErrorMessages.RallyNotFound, result.Error);
@@ -26,70 +34,80 @@ namespace DakarRallySimulation.Tests.App
         public void ReturnOkWhenRallyExistsAndAcceptsVehicle()
         {
             var rallyId = "2019";
-            var vehicleId = "vehicle1";
-            var vehicleFactory = new FakeVehicleBuilder();
+            var vehicle = new Vehicle
+            {
+                Id = "v1",
+                Type = VehicleType.SportCar
+            };
+            var vehicleFactoryMock = GetVehicleFactoryWhichReturns(vehicle.Id);
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
-                rallyId,
-                CommonBuilders.GetRallyThatAcceptsVehicle(vehicleId));
-            var service = new AddVehicleService(rallyRepo, vehicleFactory);
+                rallyId, CommonBuilders.GetRallyThatAcceptsVehicle(vehicle.Id));
+            var service = new AddVehicleService(rallyRepo, vehicleFactoryMock.Object);
 
-            var result = service.AddSportCar(rallyId, vehicleId, "BMW Racing", "BMW 3M", DateTime.UtcNow);
+            var result = service.AddVehicle(rallyId, vehicle);
 
-            Assert.True(vehicleFactory.VehicleRequested);
             Assert.True(result.IsSuccess);
+            vehicleFactoryMock.Verify(factory => factory.CreateSportCar(vehicle.Id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()));
+        }
+
+        [Fact]
+        public void CallApproAppropriateMethodOnFactoryDependingOnVehicleType()
+        {
+            var rallyId = "2019";
+            var vehicle = new Vehicle
+            {
+                Id = "v1",
+                Type = VehicleType.SportCar
+            };
+            var vehicleFactoryMock = GetVehicleFactoryWhichReturns(vehicle.Id);
+            var rallyRepo = CommonBuilders.SetUpRepoWithRally(
+                rallyId, CommonBuilders.GetRallyThatAcceptsVehicle(vehicle.Id));
+            var service = new AddVehicleService(rallyRepo, vehicleFactoryMock.Object);
+
+            var result = service.AddVehicle(rallyId, vehicle);
+
+            vehicleFactoryMock.Verify(factory => factory.CreateSportCar(vehicle.Id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()));
         }
 
         [Fact]
         public void ReturnFailWhenRallyExistsAndDoesNotAcceptVehicle()
         {
-            var rallyId = "rally1";
-            var vehicleId = "vehicle1";
             var forReason = "Rally has already started.";
-            var vehicleFactory = new FakeVehicleBuilder();
+            var rallyId = "2019";
+            var vehicle = new Vehicle
+            {
+                Id = "v1",
+                Type = VehicleType.SportCar
+            };
+            var vehicleFactoryMock = GetVehicleFactoryWhichReturns(vehicle.Id);
             var rallyRepo = CommonBuilders.SetUpRepoWithRally(
-                rallyId,
-                CommonBuilders.GetRallyThatDoesNotAcceptsVehicle(vehicleId, forReason));
-            var service = new AddVehicleService(rallyRepo, vehicleFactory);
+                rallyId, CommonBuilders.GetRallyThatDoesNotAcceptsVehicle(vehicle.Id, forReason));
+            var service = new AddVehicleService(rallyRepo, vehicleFactoryMock.Object);
 
-            var result = service.AddSportCar(rallyId, vehicleId, "BMW Racing", "BMW 3M", DateTime.UtcNow);
+            var result = service.AddVehicle(rallyId, vehicle);
 
-            Assert.True(vehicleFactory.VehicleRequested);
-            Assert.True(result.IsFailure);
+            Assert.False(result.IsSuccess);
+            vehicleFactoryMock.Verify(factory => factory.CreateSportCar(vehicle.Id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()));
             Assert.Equal(forReason, result.Error);
         }
 
-        private class FakeVehicleBuilder : ICreateVehicle
+        private Mock<ICreateVehicle> GetVehicleFactoryWhichReturns(string vehicleId)
         {
-            public bool VehicleRequested = false;
-            public IAmVehicle CreateCrossMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
-            {
-                VehicleRequested = true;
-                return new FakeVehicle(id);
-            }
+            var vehicle = new FakeVehicle(vehicleId);
 
-            public IAmVehicle CreateSportCar(string id, string teamName, string model, DateTime manufacturingDate)
-            {
-                VehicleRequested = true;
-                return new FakeVehicle(id);
-            }
+            var mock = new Mock<ICreateVehicle>();
+            mock.Setup(factory => factory.CreateSportCar(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(vehicle);
+            mock.Setup(factory => factory.CreateTerrainCar(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(vehicle);
+            mock.Setup(factory => factory.CreateTruck(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(vehicle);
+            mock.Setup(factory => factory.CreateSportMotorcycle(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(vehicle);
+            mock.Setup(factory => factory.CreateCrossMotorcycle(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(vehicle);
 
-            public IAmVehicle CreateSportMotorcycle(string id, string teamName, string model, DateTime manufacturingDate)
-            {
-                VehicleRequested = true;
-                return new FakeVehicle(id);
-            }
-
-            public IAmVehicle CreateTerrainCar(string id, string teamName, string model, DateTime manufacturingDate)
-            {
-                VehicleRequested = true;
-                return new FakeVehicle(id);
-            }
-
-            public IAmVehicle CreateTruck(string id, string teamName, string model, DateTime manufacturingDate)
-            {
-                VehicleRequested = true;
-                return new FakeVehicle(id);
-            }
+            return mock;
         }
     }
 }

@@ -7,6 +7,7 @@ using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using DakarRallySimulation.App.RemoveVehicleFromRally;
 using DakarRallySimulation.App.StartRally;
+using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
 
 namespace DakarRallySimulation.App
 {
@@ -36,29 +37,9 @@ namespace DakarRallySimulation.App
             return _createRallyService.CreateRally(year);
         }
 
-        public Result AddSportCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
+        public Result AddVehicle(string rallId, Vehicle vehicle)
         {
-            return _addVehicleToRallyService.AddSportCar(rallyId, vehicleId, teamName, model, manufacturingDate);
-        }
-
-        public Result AddTerrainCar(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return _addVehicleToRallyService.AddTerrainCar(rallyId, vehicleId, teamName, model, manufacturingDate);
-        }
-
-        public Result AddTruck(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return _addVehicleToRallyService.AddTruck(rallyId, vehicleId, teamName, model, manufacturingDate);
-        }
-
-        public Result AddSportMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return _addVehicleToRallyService.AddSportMotorcycle(rallyId, vehicleId, teamName, model, manufacturingDate);
-        }
-
-        public Result AddCrossMotorcycle(string rallyId, string vehicleId, string teamName, string model, DateTime manufacturingDate)
-        {
-            return _addVehicleToRallyService.AddCrossMotorcycle(rallyId, vehicleId, teamName, model, manufacturingDate);
+            return _addVehicleToRallyService.AddVehicle(rallId, vehicle);
         }
 
         public Result RemoveVehicleFromRally(string rallyId, string vehicleId)

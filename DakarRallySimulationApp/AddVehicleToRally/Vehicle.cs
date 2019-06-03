@@ -12,4 +12,13 @@ namespace DakarRallySimulation.App.AddVehicleToRally
         public string Model { get; set; }
         public DateTime ManufacturingDate { get; set; }
     }
+
+    public enum VehicleType
+    {
+        SportCar,
+        TerrainCar,
+        Truck,
+        SportMotorcycle,
+        CrossMotorcycle
+    }
 }
