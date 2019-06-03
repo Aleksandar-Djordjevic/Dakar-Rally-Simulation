@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using DakarRallySimulation.Domain;
 using Xunit;
 
@@ -116,13 +117,12 @@ namespace DakarRallySimulation.Tests.Domain
         private abstract class VehicleStub : IAmVehicle
         {
             public event EventHandler FinishedRally;
-            public event EventHandler Moved;
             public string Id { get; }
             public VehicleType Type { get; }
             public decimal Distance { get; }
             public VehicleStatus Status { get; }
             public DateTime? FinishedAt { get; }
-            public List<Malfunction> MalfunctionHistory { get; }
+            public ImmutableList<Malfunction> MalfunctionHistory { get; }
 
             public VehicleStub(string id)
             {
@@ -134,11 +134,6 @@ namespace DakarRallySimulation.Tests.Domain
             protected void FinishRally()
             {
                 FinishedRally?.Invoke(this, EventArgs.Empty);
-            }
-
-            public int CompareTo(object obj)
-            {
-                throw new NotImplementedException();
             }
         }
 
