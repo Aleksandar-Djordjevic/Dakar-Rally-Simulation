@@ -23,7 +23,7 @@ namespace DakarRallySimulation.Domain
         private readonly TimeSpan _repairmentDuration;
         private readonly IProvideHealthStatus _healtStatusProvider;
         private readonly int _simulationResolutionTimeInSeconds;
-        private List<Malfunction> _malfunctionHistory;
+        private readonly List<Malfunction> _malfunctionHistory;
 
         public Vehicle(VehicleType type, string id, string teamName, string model, DateTime manufacturingDate, int maxSpeed,
             TimeSpan repairmentDuration, int simulationResolutionTimeInSeconds, IProvideHealthStatus healtStatusProvider)
@@ -79,19 +79,15 @@ namespace DakarRallySimulation.Domain
                     break;
                 }
 
-                switch (_healtStatusProvider.GetHealtStatus())
+                if (_healtStatusProvider.GetHealtStatus() == HealthStatus.HeavyMalfunction)
                 {
-                    case HealthStatus.HeavyMalfunction:
-                        _malfunctionHistory.Add(Malfunction.CreateHeavy());
-                        Status = VehicleStatus.Broken;
-                        break;
-                    case HealthStatus.LightMalfunction:
-                        _malfunctionHistory.Add(Malfunction.CreateLight());
-                        await Repair();
-                        break;
-                    case HealthStatus.WorkingProperly:
-                    default:
-                        break;
+                    _malfunctionHistory.Add(Malfunction.CreateHeavy());
+                    Status = VehicleStatus.Broken;
+                }
+                else if (_healtStatusProvider.GetHealtStatus() == HealthStatus.LightMalfunction)
+                {
+                    _malfunctionHistory.Add(Malfunction.CreateLight());
+                    await Repair();
                 }
             }
 
