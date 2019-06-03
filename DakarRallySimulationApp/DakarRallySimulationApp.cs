@@ -84,7 +84,7 @@ namespace DakarRallySimulation.App
             return _vehicleStatisticsService.GetVehicleStatistics(rallyId, vehicleId);
         }
 
-        public void FindVehicle(string team, string model, DateTime manufacturingDate, GetVehicleStatistics.VehicleStatus status)
+        public void FindVehicle(string team, string model, DateTime manufacturingDate, VehicleStatus status)
         {
             throw new NotImplementedException();
         }

@@ -27,8 +27,17 @@ namespace DakarRallySimulation.App
         public TimeSpan MotorcycleRepairmentDuration { get; set; } = TimeSpan.FromHours(7);
         public int SimulationResolutionTimeInSeconds { get; set; } = 5;
 
-
-
+        public int SportCarLightMalfunctionHourlyLikelihood { get; set; } = 12;
+        public int SportCarHeavyMalfunctionHourlyLikelihood { get; set; } = 2;
+        public int TerrainCarLightMalfunctionHourlyLikelihood { get; set; } = 3;
+        public int TerrainCarHeavyMalfunctionHourlyLikelihood { get; set; } = 1;
+        public int TruckLightMalfunctionHourlyLikelihood { get; set; } = 6;
+        public int TruckHeavyMalfunctionHourlyLikelihood { get; set; } = 4;
+        public int SportMotorcycleLightMalfunctionHourlyLikelihood { get; set; } = 18;
+        public int SportMotorcycleHeavyMalfunctionHourlyLikelihood { get; set; } = 10;
+        public int CrossMotorcycleLightMalfunctionHourlyLikelihood { get; set; } = 3;
+        public int CrossMotorcycleHeavyMalfunctionHourlyLikelihood { get; set; } = 2;
+        
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DakarRallySimulationApp>().As<ISimulateDakarRally>().SingleInstance();
@@ -44,6 +53,19 @@ namespace DakarRallySimulation.App
             builder.RegisterType<RallyStatusInfoFactory>().As<ICreateRallyStatusInfo>().SingleInstance();
             builder.RegisterType<VehicleStatisticsFactory>().As<ICreateVehicleStatistics>().SingleInstance();
 
+            var healthStatusProviderFactory = new HealthStatusProviderFactory(
+                SportCarLightMalfunctionHourlyLikelihood,
+                SportCarHeavyMalfunctionHourlyLikelihood,
+                TerrainCarLightMalfunctionHourlyLikelihood,
+                TerrainCarHeavyMalfunctionHourlyLikelihood,
+                TruckLightMalfunctionHourlyLikelihood,
+                TruckHeavyMalfunctionHourlyLikelihood,
+                SportMotorcycleLightMalfunctionHourlyLikelihood,
+                SportMotorcycleHeavyMalfunctionHourlyLikelihood,
+                CrossMotorcycleLightMalfunctionHourlyLikelihood,
+                CrossMotorcycleHeavyMalfunctionHourlyLikelihood,
+                SimulationResolutionTimeInSeconds);
+
             var vehicleFactory = new VehicleFactory(
                 SportCarMaxSpeed,
                 TerrainCarMaxSpeed,
@@ -53,13 +75,13 @@ namespace DakarRallySimulation.App
                 CarRepairmentDuration,
                 TruckRepairmentDuration,
                 MotorcycleRepairmentDuration,
-                null,
+                healthStatusProviderFactory,
                 SimulationResolutionTimeInSeconds
                 );
 
             builder.RegisterInstance(vehicleFactory).As<ICreateVehicle>().SingleInstance();
             builder.RegisterType<HealthStatusProvider>().As<IProvideHealthStatus>().SingleInstance();
-            builder.RegisterType<HealthStatusProviderFactory>().As<ICreateHealthStatusProvider>().SingleInstance();
+            builder.RegisterInstance(healthStatusProviderFactory).As<ICreateHealthStatusProvider>().SingleInstance();
         }
     }
 }

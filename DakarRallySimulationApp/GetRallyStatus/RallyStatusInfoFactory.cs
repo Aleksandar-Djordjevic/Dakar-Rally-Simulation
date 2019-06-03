@@ -19,21 +19,21 @@ namespace DakarRallySimulation.App.GetRallyStatus
             };
         }
 
-        private static List<Tuple<VehicleStatus, int>> GetNumberOfVehiclesByStatus(IAmRally rally)
+        private static List<VehicleCountByStatus> GetNumberOfVehiclesByStatus(IAmRally rally)
         {
             return rally.Vehicles.Values
                 .GroupBy(vehicle => vehicle.Status)
                 .Select(group => 
-                    Tuple.Create(group.Key.ToDto(), group.Count()))
+                    new VehicleCountByStatus(group.Key.ToDto(), group.Count()))
                 .ToList();
         }
 
-        private static List<Tuple<VehicleType, int>> GetNumberOfVehiclesByType(IAmRally rally)
+        private static List<VehicleCountByType> GetNumberOfVehiclesByType(IAmRally rally)
         {
             return rally.Vehicles.Values
                 .GroupBy(vehicle => vehicle.Type)
                 .Select(group => 
-                    Tuple.Create(group.Key.ToDto(), group.Count()))
+                    new VehicleCountByType(group.Key.ToDto(), group.Count()))
                 .ToList();
         }
 

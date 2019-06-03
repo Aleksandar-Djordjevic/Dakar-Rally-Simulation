@@ -5,6 +5,6 @@ namespace DakarRallySimulation.App.FindVehicle
 {
     public interface IFindVehicle
     {
-        void FindVehicle(string team, string model, DateTime manufacturingDate, GetVehicleStatistics.VehicleStatus status);
+        void FindVehicle(string team, string model, DateTime manufacturingDate, VehicleStatus status);
     }
 }
