@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.App;
-using DakarRallySimulation.App.AddVehicleToRally;
+using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
 
 namespace WebAPI.Controllers
 {
@@ -55,6 +56,24 @@ namespace WebAPI.Controllers
         {
             var result = _rallySimulationApp.StartRally(rallyId)
                 .OnSuccess<ActionResult>(() => StatusCode(200))
+                .OnFailureCompensate(func: error => GetActionResult(error));
+            return result.Value;
+        }
+
+        [HttpGet("{rallyId}/leaderboard")]
+        public ActionResult GetLeaderboard(string rallyId)
+        {
+            var result = _rallySimulationApp.GetLeaderboard(rallyId)
+                .OnSuccess<Leaderboard, ActionResult>(leaderboard => new ObjectResult(leaderboard))
+                .OnFailureCompensate(func: error => GetActionResult(error));
+            return result.Value;
+        }
+
+        [HttpGet("{rallyId}/leaderboard/{type}")]
+        public ActionResult GetLeaderboard(string rallyId, VehicleType type)
+        {
+            var result = _rallySimulationApp.GetLeaderboard(rallyId, type)
+                .OnSuccess<Leaderboard, ActionResult>(leaderboard => new ObjectResult(leaderboard))
                 .OnFailureCompensate(func: error => GetActionResult(error));
             return result.Value;
         }

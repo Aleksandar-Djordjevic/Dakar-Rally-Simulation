@@ -1,8 +1,10 @@
-﻿namespace DakarRallySimulation.App.GetLeaderboard
+﻿using CSharpFunctionalExtensions;
+
+namespace DakarRallySimulation.App.GetLeaderboard
 {
     public interface IProvideLeaderboard
     {
-        void GetLeaderboard();
-        void GetLeaderboard(VehicleType type);
+        Result<Leaderboard> GetLeaderboard(string rallyId);
+        Result<Leaderboard> GetLeaderboard(string rallyId, VehicleType type);
     }
 }

@@ -45,13 +45,14 @@ namespace DakarRallySimulation.App
             builder.RegisterType<AddVehicleService>().As<IAddVehicleToRally>().SingleInstance();
             builder.RegisterType<RemoveVehicleService>().As<IRemoveVehicleFromRally>().SingleInstance();
             builder.RegisterType<StartRallyService>().As<IStartRally>().SingleInstance();
-            //builder.RegisterType<DakarRallySimulationApp>().As<IProvideLeaderboard>().SingleInstance();
+            builder.RegisterType<LeaderboardService>().As<IProvideLeaderboard>().SingleInstance();
             builder.RegisterType<VehicleStatisticsService>().As<IProvideVehicleStatistics>().SingleInstance();
             //builder.RegisterType<DakarRallySimulationApp>().As<IFindVehicle>().SingleInstance();
             builder.RegisterType<RallyRepository>().As<IAmRallyRepository>().SingleInstance();
             builder.RegisterType<GetRallyStatusInfoService>().As<IProvideRallyStatusInfo>().SingleInstance();
             builder.RegisterType<RallyStatusInfoFactory>().As<ICreateRallyStatusInfo>().SingleInstance();
             builder.RegisterType<VehicleStatisticsFactory>().As<ICreateVehicleStatistics>().SingleInstance();
+            builder.RegisterType<LeaderboardFactory>().As<ICreateLeaderboard>().SingleInstance();
 
             var healthStatusProviderFactory = new HealthStatusProviderFactory(
                 SportCarLightMalfunctionHourlyLikelihood,

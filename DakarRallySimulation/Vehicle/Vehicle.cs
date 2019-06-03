@@ -117,19 +117,6 @@ namespace DakarRallySimulation.Domain.Vehicle
             Moved?.Invoke(this, EventArgs.Empty);
         }
 
-        public int CompareTo(object obj)
-        {
-            var other = (IAmVehicle)obj;
-            if (FinishedAt != null & other.FinishedAt != null)
-            {
-                return FinishedAt < other.FinishedAt ? -1 : 1;
-            }
-            if (FinishedAt == null & other.FinishedAt == null)
-            {
-                return Distance > other.Distance ? -1 : 1;
-            }
-
-            return FinishedAt != null ? -1 : 1;
-        }
+        
     }
 }

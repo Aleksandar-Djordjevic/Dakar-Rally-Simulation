@@ -18,8 +18,9 @@ namespace DakarRallySimulation.App
         private readonly IStartRally _startRallyService;
         private readonly IProvideVehicleStatistics _vehicleStatisticsService;
         private readonly IProvideRallyStatusInfo _getRallyStatusInfoService;
+        private readonly IProvideLeaderboard _leaderboardService;
 
-        public DakarRallySimulationApp(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService)
+        public DakarRallySimulationApp(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService, IProvideLeaderboard leaderboardService)
         {
             _createRallyService = createRallyService;
             _addVehicleToRallyService = addVehicleToRallyService;
@@ -27,6 +28,7 @@ namespace DakarRallySimulation.App
             _startRallyService = startRallyService;
             _vehicleStatisticsService = vehicleStatisticsService;
             _getRallyStatusInfoService = getRallyStatusInfoService;
+            _leaderboardService = leaderboardService;
         }
 
         public Result CreateRally(int year)
@@ -69,14 +71,14 @@ namespace DakarRallySimulation.App
             return _startRallyService.StartRally(rallyId);
         }
 
-        public void GetLeaderboard()
+        public Result<Leaderboard> GetLeaderboard(string rallyId)
         {
-            throw new NotImplementedException();
+            return _leaderboardService.GetLeaderboard(rallyId);
         }
 
-        public void GetLeaderboard(GetLeaderboard.VehicleType type)
+        public Result<Leaderboard> GetLeaderboard(string rallyId, VehicleType type)
         {
-            throw new NotImplementedException();
+            return _leaderboardService.GetLeaderboard(rallyId, type);
         }
 
         public Result<VehicleStatistics> GetVehicleStatistics(string rallyId, string vehicleId)

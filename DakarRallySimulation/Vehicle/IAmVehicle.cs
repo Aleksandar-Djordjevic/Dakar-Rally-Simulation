@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DakarRallySimulation.Domain.Vehicle
 {
-    public interface IAmVehicle : IComparable
+    public interface IAmVehicle
     {
         event EventHandler FinishedRally;
         event EventHandler Moved;
