@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.App.CreateRally;
+using DakarRallySimulation.App.FindVehicle;
 using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using DakarRallySimulation.App.RemoveVehicleFromRally;
 using DakarRallySimulation.App.StartRally;
-using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
+using AddingVehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
+using FoundVehicle = DakarRallySimulation.App.FindVehicle.Vehicle;
 
 namespace DakarRallySimulation.App
 {
@@ -20,8 +23,9 @@ namespace DakarRallySimulation.App
         private readonly IProvideVehicleStatistics _vehicleStatisticsService;
         private readonly IProvideRallyStatusInfo _getRallyStatusInfoService;
         private readonly IProvideLeaderboard _leaderboardService;
+        private readonly IFindVehicle _findVehicleService;
 
-        public DakarRallySimulationApp(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService, IProvideLeaderboard leaderboardService)
+        public DakarRallySimulationApp(ICreateRally createRallyService, IAddVehicleToRally addVehicleToRallyService, IRemoveVehicleFromRally removeVehicleFromRallyService, IStartRally startRallyService, IProvideVehicleStatistics vehicleStatisticsService, IProvideRallyStatusInfo getRallyStatusInfoService, IProvideLeaderboard leaderboardService, IFindVehicle findVehicleService)
         {
             _createRallyService = createRallyService;
             _addVehicleToRallyService = addVehicleToRallyService;
@@ -30,6 +34,7 @@ namespace DakarRallySimulation.App
             _vehicleStatisticsService = vehicleStatisticsService;
             _getRallyStatusInfoService = getRallyStatusInfoService;
             _leaderboardService = leaderboardService;
+            _findVehicleService = findVehicleService;
         }
 
         public Result CreateRally(int year)
@@ -37,7 +42,7 @@ namespace DakarRallySimulation.App
             return _createRallyService.CreateRally(year);
         }
 
-        public Result AddVehicle(string rallId, Vehicle vehicle)
+        public Result AddVehicle(string rallId, AddingVehicle vehicle)
         {
             return _addVehicleToRallyService.AddVehicle(rallId, vehicle);
         }
@@ -67,9 +72,9 @@ namespace DakarRallySimulation.App
             return _vehicleStatisticsService.GetVehicleStatistics(rallyId, vehicleId);
         }
 
-        public void FindVehicle(string team, string model, DateTime manufacturingDate, VehicleStatus status)
+        public Result<IEnumerable<FoundVehicle>> FindVehicle(string rallyId, Query query)
         {
-            throw new NotImplementedException();
+            return _findVehicleService.FindVehicle(rallyId, query);
         }
 
         public Result<RallyStatusInfo> GetRallyStatusInfo(string rallyId)

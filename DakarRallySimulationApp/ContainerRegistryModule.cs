@@ -2,6 +2,7 @@
 using Autofac;
 using DakarRallySimulation.App.AddVehicleToRally;
 using DakarRallySimulation.App.CreateRally;
+using DakarRallySimulation.App.FindVehicle;
 using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
@@ -43,7 +44,7 @@ namespace DakarRallySimulation.App
             builder.RegisterType<StartRallyService>().As<IStartRally>().SingleInstance();
             builder.RegisterType<LeaderboardService>().As<IProvideLeaderboard>().SingleInstance();
             builder.RegisterType<VehicleStatisticsService>().As<IProvideVehicleStatistics>().SingleInstance();
-            //builder.RegisterType<DakarRallySimulationApp>().As<IFindVehicle>().SingleInstance();
+            builder.RegisterType<FindVehicleService>().As<IFindVehicle>().SingleInstance();
             builder.RegisterType<RallyRepository>().As<IAmRallyRepository>().SingleInstance();
             builder.RegisterType<GetRallyStatusInfoService>().As<IProvideRallyStatusInfo>().SingleInstance();
             builder.RegisterType<RallyStatusInfoFactory>().As<ICreateRallyStatusInfo>().SingleInstance();

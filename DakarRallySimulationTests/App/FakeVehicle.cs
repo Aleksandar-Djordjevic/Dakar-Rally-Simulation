@@ -17,6 +17,9 @@ namespace DakarRallySimulation.Tests.App
         
         public string Id { get; }
         public VehicleType Type { get; }
+        public string TeamName { get; }
+        public string Model { get; }
+        public DateTime ManufacturingDate { get; }
         public decimal Distance { get; }
         public VehicleStatus Status { get; }
         public DateTime? FinishedAt { get; }

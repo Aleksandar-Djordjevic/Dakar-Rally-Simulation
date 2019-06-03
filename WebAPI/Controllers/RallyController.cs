@@ -1,10 +1,13 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Collections.Generic;
+using CSharpFunctionalExtensions;
 using DakarRallySimulation.App;
+using DakarRallySimulation.App.FindVehicle;
 using DakarRallySimulation.App.GetLeaderboard;
 using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using Microsoft.AspNetCore.Mvc;
-using Vehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
+using AddingVehicle = DakarRallySimulation.App.AddVehicleToRally.Vehicle;
+using FoundVehicle = DakarRallySimulation.App.FindVehicle.Vehicle;
 
 namespace WebAPI.Controllers
 {
@@ -29,7 +32,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("{rallyId}/vehicles/")]
-        public ActionResult AddVehicle(string rallyId, [FromBody] Vehicle vehicle)
+        public ActionResult AddVehicle(string rallyId, [FromBody] AddingVehicle vehicle)
         {
             var result = _rallySimulationApp.AddVehicle(rallyId, vehicle)
                 .OnSuccess<ActionResult>(() => StatusCode(201))
@@ -78,6 +81,15 @@ namespace WebAPI.Controllers
         {
             var result =_rallySimulationApp.GetVehicleStatistics(rallyId, vehicleId)
                 .OnSuccess<VehicleStatistics, ActionResult>(stats => new ObjectResult(stats))
+                .OnFailureCompensate(func: error => GetActionResult(error));
+            return result.Value;
+        }
+
+        [HttpPost("{rallyId}/vehicles/find")]
+        public ActionResult<IEnumerable<FoundVehicle>> FindVehicle(string rallyId, [FromBody] Query query)
+        {
+            var result = _rallySimulationApp.FindVehicle(rallyId, query)
+                .OnSuccess<IEnumerable<FoundVehicle>, ActionResult>(stats => new ObjectResult(stats))
                 .OnFailureCompensate(func: error => GetActionResult(error));
             return result.Value;
         }
