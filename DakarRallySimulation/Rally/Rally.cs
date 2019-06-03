@@ -36,12 +36,28 @@ namespace DakarRallySimulation.Domain
 
         public Result AddVehicle(IAmVehicle vehicle)
         {
-            return _state.AddVehicle(vehicle);
+            return Result.Create(_state.AllowedVehicleAdding, "Adding vehicle not allowed.")
+                .OnSuccess(() => Result.Create(_vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded))
+                .OnSuccess(() =>
+                {
+                    _vehicles.Add(vehicle.Id, vehicle);
+                    _vehiclesStillInRally.Add(vehicle.Id);
+                    vehicle.FinishedRally += WhenVehicleFinishesRally;
+                    vehicle.JoinRally(this);
+                });
         }
 
         public Result RemoveVehicle(string vehicleId)
         {
-            return _state.RemoveVehicle(vehicleId);
+            return Result.Create(_state.AllowedVehicleRemoving, "Removing vehicle not allowed.")
+                .OnSuccess(() => Result.Create(_vehicles.TryGetValue(vehicleId, out var v), v, ErrorMessages.VehicleDoesNotExist))
+                .OnSuccess(vehicle =>
+                {
+                    _vehicles.Remove(vehicle.Id);
+                    _vehiclesStillInRally.Remove(vehicle.Id);
+                    vehicle.FinishedRally -= WhenVehicleFinishesRally;
+                    vehicle.LeaveRally(this);
+                });
         }
 
         public Result Start()
@@ -69,8 +85,8 @@ namespace DakarRallySimulation.Domain
                 Rally = rally;
             }
 
-            public abstract Result AddVehicle(IAmVehicle vehicle);
-            public abstract Result RemoveVehicle(string vehicleId);
+            public abstract bool AllowedVehicleAdding { get; }
+            public abstract bool AllowedVehicleRemoving { get; }
             public abstract Result Start();
 
             public abstract void VehicleFinishedRally(string vehicleId);
@@ -82,28 +98,9 @@ namespace DakarRallySimulation.Domain
 
             public override RallyStatus Status { get {return RallyStatus.Pending; }}
 
-            public override Result AddVehicle(IAmVehicle vehicle)
-            {
-                return Result.Create(!Rally._vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded)
-                    .OnSuccess(() =>
-                    {
-                        Rally._vehicles.Add(vehicle.Id, vehicle);
-                        Rally._vehiclesStillInRally.Add(vehicle.Id);
-                        vehicle.FinishedRally += Rally.WhenVehicleFinishesRally;
-                    });
-            }
+            public override bool AllowedVehicleAdding => true;
 
-            public override Result RemoveVehicle(string vehicleId)
-            {
-                return Result.Create(
-                        Rally._vehicles.TryGetValue(vehicleId, out var v), v, ErrorMessages.VehicleDoesNotExist)
-                    .OnSuccess(vehicle =>
-                    {
-                        Rally._vehicles.Remove(vehicle.Id);
-                        Rally._vehiclesStillInRally.Remove(vehicle.Id);
-                        vehicle.FinishedRally -= Rally.WhenVehicleFinishesRally;
-                    });
-            }
+            public override bool AllowedVehicleRemoving => true;
 
             public override Result Start()
             {
@@ -112,10 +109,6 @@ namespace DakarRallySimulation.Domain
                     {
                         Rally._state = new RallyRunning(Rally);
                         Rally.OnStarted();
-                        foreach (var vehicle in Rally._vehicles.Values)
-                        {
-                            vehicle.StartRally(Rally);
-                        }
                     });
             }
 
@@ -131,15 +124,9 @@ namespace DakarRallySimulation.Domain
 
             public override RallyStatus Status { get {return RallyStatus.Running; }}
 
-            public override Result AddVehicle(IAmVehicle vehicle)
-            {
-                return Result.Fail("Rally has already started. Vehicle cannot be added.");
-            }
+            public override bool AllowedVehicleAdding => false;
 
-            public override Result RemoveVehicle(string vehicleId)
-            {
-                return Result.Fail("Rally has already started. Vehicle cannot be removed.");
-            }
+            public override bool AllowedVehicleRemoving => false;
 
             public override Result Start()
             {
@@ -165,15 +152,9 @@ namespace DakarRallySimulation.Domain
 
             public override RallyStatus Status { get {return RallyStatus.Finished; }}
 
-            public override Result AddVehicle(IAmVehicle vehicle)
-            {
-                return Result.Fail("Rally has already started. Vehicle cannot be added.");
-            }
+            public override bool AllowedVehicleAdding => false;
 
-            public override Result RemoveVehicle(string vehicleId)
-            {
-                return Result.Fail("Rally has already started. Vehicle cannot be removed.");
-            }
+            public override bool AllowedVehicleRemoving => false;
 
             public override Result Start()
             {
