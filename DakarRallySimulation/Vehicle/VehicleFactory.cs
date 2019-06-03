@@ -1,7 +1,6 @@
 ﻿using System;
-using DakarRallySimulation.Domain.VehicleHealthStatus;
 
-namespace DakarRallySimulation.Domain.Vehicle
+namespace DakarRallySimulation.Domain
 {
     public class VehicleFactory : ICreateVehicle
     {

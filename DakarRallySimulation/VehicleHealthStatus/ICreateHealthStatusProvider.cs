@@ -1,4 +1,4 @@
-﻿namespace DakarRallySimulation.Domain.VehicleHealthStatus
+﻿namespace DakarRallySimulation.Domain
 {
     public interface ICreateHealthStatusProvider
     {

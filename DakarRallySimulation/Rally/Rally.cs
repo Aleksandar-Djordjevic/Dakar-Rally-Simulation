@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSharpFunctionalExtensions;
-using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.Domain
 {

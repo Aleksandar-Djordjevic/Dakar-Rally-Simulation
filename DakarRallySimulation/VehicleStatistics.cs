@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DakarRallySimulation.Domain.Vehicle;
 
 namespace DakarRallySimulation.Domain
 {

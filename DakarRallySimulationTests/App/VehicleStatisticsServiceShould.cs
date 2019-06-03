@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DakarRallySimulation.App.GetVehicleStatistics;
-using DakarRallySimulation.Domain.Vehicle;
+using DakarRallySimulation.Domain;
 using Xunit;
 using ErrorMessages = DakarRallySimulation.App.ErrorMessages;
 using Malfunction = DakarRallySimulation.App.GetVehicleStatistics.Malfunction;
@@ -79,7 +79,7 @@ namespace DakarRallySimulation.Tests.App
             public VehicleStatistics Create(IAmVehicle vehicle)
             {
                 return _stats;
-            }
+            }       
         }
     }
 }

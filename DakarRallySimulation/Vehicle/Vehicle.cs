@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DakarRallySimulation.Domain.VehicleHealthStatus;
 
-namespace DakarRallySimulation.Domain.Vehicle
+namespace DakarRallySimulation.Domain
 {
     public class Vehicle : IAmVehicle
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DakarRallySimulation.Domain.Vehicle
+namespace DakarRallySimulation.Domain
 {
     public interface ICreateVehicle
     {

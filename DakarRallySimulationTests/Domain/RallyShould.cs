@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DakarRallySimulation.Domain;
-using DakarRallySimulation.Domain.Vehicle;
 using Xunit;
 
 namespace DakarRallySimulation.Tests.Domain

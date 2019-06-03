@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DakarRallySimulation.Domain.Vehicle
+namespace DakarRallySimulation.Domain
 {
     public interface IAmVehicle
     {

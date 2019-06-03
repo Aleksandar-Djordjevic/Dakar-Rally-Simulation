@@ -7,8 +7,7 @@ using DakarRallySimulation.App.GetRallyStatus;
 using DakarRallySimulation.App.GetVehicleStatistics;
 using DakarRallySimulation.App.RemoveVehicleFromRally;
 using DakarRallySimulation.App.StartRally;
-using DakarRallySimulation.Domain.Vehicle;
-using DakarRallySimulation.Domain.VehicleHealthStatus;
+using DakarRallySimulation.Domain;
 
 namespace DakarRallySimulation.App
 {

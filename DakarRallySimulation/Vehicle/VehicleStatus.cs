@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DakarRallySimulation.Domain.Vehicle
+namespace DakarRallySimulation.Domain
 {
     public class VehicleStatus
     {
