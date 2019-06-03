@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using CSharpFunctionalExtensions;
 
@@ -8,9 +9,7 @@ namespace DakarRallySimulation.Domain
     public class Rally : IAmRally
     {
         public event EventHandler Started;
-        public event EventHandler<IAmVehicle> VehicleAdded;
-        public event EventHandler<IAmVehicle> VehicleRemoved;
-
+        
         public string Id { get; }
         public int Year { get; }
 
@@ -20,9 +19,10 @@ namespace DakarRallySimulation.Domain
         }
         public int Distance { get; }
         public bool IsFinished { get; private set; }
-        public Dictionary<string, IAmVehicle> Vehicles { get; } = new Dictionary<string, IAmVehicle>();
+        public ImmutableDictionary<string, IAmVehicle> Vehicles => _vehicles.ToImmutableDictionary();
 
         private RallyState _state;
+        private Dictionary<string, IAmVehicle> _vehicles;
         private HashSet<string> _vehiclesStillInRally = new HashSet<string>();
 
         public Rally(int year, int distance)
@@ -31,6 +31,7 @@ namespace DakarRallySimulation.Domain
             Year = year;
             Distance = distance;
             _state = new RallyPending(this);
+            _vehicles = new Dictionary<string, IAmVehicle>();
         }
 
         public Result AddVehicle(IAmVehicle vehicle)
@@ -83,10 +84,10 @@ namespace DakarRallySimulation.Domain
 
             public override Result AddVehicle(IAmVehicle vehicle)
             {
-                return Result.Create(!Rally.Vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded)
+                return Result.Create(!Rally._vehicles.ContainsKey(vehicle.Id), ErrorMessages.VehicleAlreadyAdded)
                     .OnSuccess(() =>
                     {
-                        Rally.Vehicles.Add(vehicle.Id, vehicle);
+                        Rally._vehicles.Add(vehicle.Id, vehicle);
                         Rally._vehiclesStillInRally.Add(vehicle.Id);
                         vehicle.FinishedRally += Rally.WhenVehicleFinishesRally;
                     });
@@ -95,10 +96,10 @@ namespace DakarRallySimulation.Domain
             public override Result RemoveVehicle(string vehicleId)
             {
                 return Result.Create(
-                        Rally.Vehicles.TryGetValue(vehicleId, out var v), v, ErrorMessages.VehicleDoesNotExist)
+                        Rally._vehicles.TryGetValue(vehicleId, out var v), v, ErrorMessages.VehicleDoesNotExist)
                     .OnSuccess(vehicle =>
                     {
-                        Rally.Vehicles.Remove(vehicle.Id);
+                        Rally._vehicles.Remove(vehicle.Id);
                         Rally._vehiclesStillInRally.Remove(vehicle.Id);
                         vehicle.FinishedRally -= Rally.WhenVehicleFinishesRally;
                     });
@@ -106,12 +107,12 @@ namespace DakarRallySimulation.Domain
 
             public override Result Start()
             {
-                return Result.Create(Rally.Vehicles.Any(), ErrorMessages.CannotStartRallyWithNoVehicles)
+                return Result.Create(Rally._vehicles.Any(), ErrorMessages.CannotStartRallyWithNoVehicles)
                     .OnSuccess(() =>
                     {
                         Rally._state = new RallyRunning(Rally);
                         Rally.OnStarted();
-                        foreach (var vehicle in Rally.Vehicles.Values)
+                        foreach (var vehicle in Rally._vehicles.Values)
                         {
                             vehicle.StartRally(Rally);
                         }

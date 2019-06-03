@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using CSharpFunctionalExtensions;
 
 namespace DakarRallySimulation.Domain
@@ -7,15 +7,13 @@ namespace DakarRallySimulation.Domain
     public interface IAmRally
     {
         event EventHandler Started;
-        event EventHandler<IAmVehicle> VehicleAdded;
-        event EventHandler<IAmVehicle> VehicleRemoved;
 
-        int Distance { get; }
         string Id { get; }
-        bool IsFinished { get; }
         int Year { get; }
+        int Distance { get; }
+        bool IsFinished { get; }
         RallyStatus GetStatus();
-        Dictionary<string, IAmVehicle> Vehicles { get; } 
+        ImmutableDictionary<string, IAmVehicle> Vehicles { get; } 
 
         Result AddVehicle(IAmVehicle vehicle);
         Result RemoveVehicle(string vehicleId);

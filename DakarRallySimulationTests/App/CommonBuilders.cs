@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using CSharpFunctionalExtensions;
 using DakarRallySimulation.App;
 using DakarRallySimulation.Domain;
@@ -80,14 +81,14 @@ namespace DakarRallySimulation.Tests.App
         {
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.Vehicles)
-                .Returns(new Dictionary<string, IAmVehicle>());
+                .Returns(ImmutableDictionary<string, IAmVehicle>.Empty);
             return rallyMock.Object;
         }
 
         public static IAmRally GetRallyThatHasVehicle(string vehicleId, FakeVehicle vehicle)
         {
-            var vehicles = new Dictionary<string, IAmVehicle>();
-            vehicles.Add(vehicle.Id, vehicle);
+            var vehicles = ImmutableDictionary<string, IAmVehicle>.Empty;
+            vehicles = vehicles.Add(vehicle.Id, vehicle);
             var rallyMock = new Mock<IAmRally>();
             rallyMock.Setup(rally => rally.Vehicles)
                 .Returns(vehicles);
