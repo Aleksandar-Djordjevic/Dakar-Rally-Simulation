@@ -79,12 +79,13 @@ namespace DakarRallySimulation.Domain
                     break;
                 }
 
-                if (_healtStatusProvider.GetHealtStatus() == HealthStatus.HeavyMalfunction)
+                var healthStatus = _healtStatusProvider.GetHealtStatus();
+                if (healthStatus == HealthStatus.HeavyMalfunction)
                 {
                     _malfunctionHistory.Add(Malfunction.CreateHeavy());
                     Status = VehicleStatus.Broken;
                 }
-                else if (_healtStatusProvider.GetHealtStatus() == HealthStatus.LightMalfunction)
+                else if (healthStatus == HealthStatus.LightMalfunction)
                 {
                     _malfunctionHistory.Add(Malfunction.CreateLight());
                     await Repair();
